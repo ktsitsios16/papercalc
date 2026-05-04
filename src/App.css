@@ -1,0 +1,446 @@
+body {
+  margin: 0;
+  input {
+  font-family: "Inter", Arial, sans-serif !important;
+  font-weight: 500 !important;
+  background: #f4f4f4;
+  color: #222;
+}
+
+input {
+  width: 100%;
+  padding: 15px 16px;
+  font-size: 22px;
+  font-family: "Inter", Arial, sans-serif !important;
+  font-weight: 500 !important;
+  border: 2px solid #b5b5b5;
+  border-radius: 8px;
+  background: #fafafa;
+  color: #222;
+  box-sizing: border-box;
+}
+/* === CONTAINER (Industrial flat card) === */
+.container {
+  max-width: 480px;
+  margin: 20px auto;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  border: 2px solid #d0d0d0;   /* έντονο industrial border */
+  box-sizing: border-box;
+  transition: background 0.3s, color 0.3s, border-color 0.3s;
+}
+
+/* === DARK MODE === */
+.container.dark {
+  background: #1e1e1e;
+  color: #f0f0f0;
+  border-color: #444;          /* industrial dark border */
+}
+
+.container.dark label {
+  color: #eaeaea;
+}
+
+.container.dark input {
+  background: #2b2b2b;
+  border-color: #555;
+  color: #fff;
+}
+
+.container.dark .result-box {
+  background: #242424;
+  border-color: #555;
+  color: #fff;
+}
+
+/* === HEADER === */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.header h1 {
+  font-size: 22px;
+  margin: 0;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.top-controls {
+  display: flex;
+  gap: 6px;
+}
+
+.top-controls button {
+  padding: 6px 12px;
+  border: 2px solid #c8c8c8;
+  background: #e8e8e8;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.top-controls .active {
+  background: #000;
+  color: #fff;
+  border-color: #000;
+}
+
+.dark-toggle {
+  background: #000;
+  color: #fff;
+}
+
+/* === TABS (Industrial geometry) === */
+.tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.tabs button {
+  flex: 1;
+  padding: 15px;
+  background: #e8e8e8;
+  border: 2px solid #c8c8c8;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: -0.3px;
+}
+
+.tabs .active {
+  background: #014120;
+  color: #fff;
+  border-color: #000;
+}
+
+/* === MODE SWITCH === */
+.mode-switch {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.mode-switch button {
+  flex: 1;
+  padding: 10px;
+  background: #e8e8e8;
+  border: 2px solid #c8c8c8;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.mode-switch .active {
+  background: #000;
+  color: #fff;
+  border-color: #000;
+}
+
+/* === LABELS (industrial bold) === */
+label {
+  display: block;
+  margin: 12px 0 6px;
+  font-size: 18px;
+  font-weight: 900;     /* πιο εργαλειακό bold */
+  letter-spacing: -0.2px;
+}
+
+/* === INPUTS (industrial borders) === */
+input {
+  width: 100%;
+  padding: 15px 16px;
+  font-size: 22px;
+  font-family: "Inter", Arial, sans-serif;   /* ΠΡΟΣΘΗΚΗ */
+  font-weight: 500;                          /* ΤΩΡΑ ΘΑ ΕΦΑΡΜΟΣΤΕΙ */
+  border: 2px solid #980808;
+  border-radius: 8px;
+  background: #e4cad7;
+  color: #222;
+  box-sizing: border-box;
+}
+
+input:focus {
+  outline: none;
+  border-color: #000;          /* industrial focus */
+}
+
+/* === GSM GRID === */
+.gsm-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 6px;
+  margin: 10px 0 15px;
+}
+
+.gsm-btn {
+  padding: 8px 0;
+  background: #909090;
+  border: 2px solid #c8c8c8;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.gsm-btn.active {
+  background: #000;
+  color: #fff;
+  border-color: #000;
+}
+
+/* === SIZE INPUTS === */
+.size-inputs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.size-inputs input {
+  flex: 1;
+}
+
+/* === SIZE GROUP TITLES (compact industrial spacing) === */
+.group-title {
+  font-size: 14px;
+  font-weight: 800;
+  margin: 4px 0 2px;
+  letter-spacing: -0.2px;
+}
+
+/* === SIZE BUTTON GRID === */
+.size-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.size-btn {
+  padding: 4px 4px;
+  background: #929292;
+  border: 2px solid #c8c8c8;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.size-btn.active {
+  background: #000;
+  color: #fff;
+  border-color: #000;
+}
+
+/* === RESULT BOX (industrial panel) === */
+.result-box {
+  margin-top: 20px;
+  background: #d8fce6;
+  border: 2px solid #014120;
+  padding: 16px;
+  border-radius: 8px;
+  text-align: center;
+  color: #222;              /* ΠΙΟ ΣΚΟΥΡΟ ΚΕΙΜΕΝΟ */
+}
+
+.result-box .big {
+  font-size: 26px;
+  font-weight: 900;
+  margin-bottom: 6px;
+  letter-spacing: -0.4px;
+}
+
+.result-box .small {
+  font-size: 14px;
+  opacity: 0.85;
+}
+/* === PRESET BUTTONS (GSM & Dimensions) — INDUSTRIAL PRO === */
+.preset-button,
+.gsm-button,
+.size-button {
+  background: #434242;                 /* πιο σκούρο industrial */
+  color: #111;                         /* καθαρό, εργαλειακό text */
+  border: 2px solid #8c8c8c;           /* έντονο industrial border */
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-family: "Inter", Arial, sans-serif;
+  font-weight: 600;                    /* καθαροί αριθμοί */
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+/* Hover effect */
+.preset-button:hover,
+.gsm-button:hover,
+.size-button:hover {
+  background: #323232;                 /* ένα κλικ πιο σκούρο */
+  border-color: #555;                  /* πιο έντονο industrial edge */
+}
+
+/* Active (όταν πατιέται) */
+.preset-button:active,
+.gsm-button:active,
+.size-button:active {
+  background: #bfbfbf;                 /* pressed state */
+  border-color: #333;                  /* βαθύ industrial */
+}
+:root {
+  --text: #6b6375;
+  --text-h: #08060d;
+  --bg: #fff;
+  --border: #e5e4e7;
+  --code-bg: #f4f3ec;
+  --accent: #aa3bff;
+  --accent-bg: rgba(170, 59, 255, 0.1);
+  --accent-border: rgba(170, 59, 255, 0.5);
+  --social-bg: rgba(244, 243, 236, 0.5);
+  --shadow:
+    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+
+  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --mono: ui-monospace, Consolas, monospace;
+
+  font: 18px/145% var(--sans);
+  letter-spacing: 0.18px;
+  color-scheme: light dark;
+  color: var(--text);
+  background: var(--bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  @media (max-width: 1024px) {
+    font-size: 16px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: #9ca3af;
+    --text-h: #f3f4f6;
+    --bg: #16171d;
+    --border: #2e303a;
+    --code-bg: #1f2028;
+    --accent: #c084fc;
+    --accent-bg: rgba(192, 132, 252, 0.15);
+    --accent-border: rgba(192, 132, 252, 0.5);
+    --social-bg: rgba(47, 48, 58, 0.5);
+    --shadow:
+      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+  }
+
+  #social .button-icon {
+    filter: invert(1) brightness(2);
+  }
+}
+
+body {
+  margin: 0;
+}
+
+#root {
+  width: 1126px;
+  max-width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  border-inline: 1px solid var(--border);
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+h1,
+h2 {
+  font-family: var(--heading);
+  font-weight: 500;
+  color: var(--text-h);
+}
+
+h1 {
+  font-size: 56px;
+  letter-spacing: -1.68px;
+  margin: 32px 0;
+  @media (max-width: 1024px) {
+    font-size: 36px;
+    margin: 20px 0;
+  }
+}
+h2 {
+  font-size: 24px;
+  line-height: 118%;
+  letter-spacing: -0.24px;
+  margin: 0 0 8px;
+  @media (max-width: 1024px) {
+    font-size: 20px;
+  }
+}
+p {
+  margin: 0;
+}
+
+code,
+.counter {
+  font-family: var(--mono);
+  display: inline-flex;
+  border-radius: 4px;
+  color: var(--text-h);
+}
+
+code {
+  font-size: 15px;
+  line-height: 135%;
+  padding: 4px 8px;
+  background: var(--code-bg);
+}
+
+/* === MAIN ICON BUTTONS (Industrial Pro) === */
+.main-button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  background: #d6d6d6;
+  border: 2px solid #8c8c8c;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: "Inter", Arial, sans-serif;
+  font-weight: 600;
+  color: #111;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+}
+
+.main-button .icon {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.main-button .icon img {
+  width: 24px;
+  height: 24px;
+  filter: brightness(0);
+}
+
+.main-button:hover {
+  background: #c8c8c8;
+  border-color: #555;
+}
+
+.main-button:active {
+  background: #bfbfbf;
+  border-color: #333;
+  transform: scale(0.97);
+}

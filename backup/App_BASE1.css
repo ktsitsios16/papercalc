@@ -1,0 +1,224 @@
+body {
+  margin: 0;
+  font-family: "Inter", Arial, sans-serif;
+  background: #f4f4f4;
+  color: #222;
+}
+
+.container {
+  max-width: 480px;
+  margin: 20px auto;
+  background: white;
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+  transition: background 0.3s, color 0.3s;
+}
+
+/* === DARK MODE (background + text only) === */
+.container.dark {
+  background: #1e1e1e;
+  color: #f0f0f0;
+  box-shadow: 0 4px 18px rgba(255,255,255,0.05);
+}
+
+.container.dark label {
+  color: #eaeaea;
+}
+
+.container.dark input {
+  background: #2a2a2a;
+  border-color: #555;
+  color: #fff;
+}
+
+.container.dark .result-box {
+  background: #2a2a2a;
+  border-color: #444;
+  color: #fff;
+}
+
+/* === HEADER === */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.header h1 {
+  font-size: 22px;
+  margin: 0;
+  font-weight: 700;
+}
+
+.top-controls {
+  display: flex;
+  gap: 6px;
+}
+
+.top-controls button {
+  padding: 6px 10px;
+  border: none;
+  background: #e5e5e5;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.top-controls .active {
+  background: #000;
+  color: #fff;
+}
+
+.dark-toggle {
+  background: #000;
+  color: #fff;
+}
+
+/* === TABS === */
+.tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.tabs button {
+  flex: 1;
+  padding: 10px;
+  background: #e5e5e5;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.tabs .active {
+  background: #000;
+  color: #fff;
+}
+
+/* === MODE SWITCH === */
+.mode-switch {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.mode-switch button {
+  flex: 1;
+  padding: 10px;
+  background: #e5e5e5;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.mode-switch .active {
+  background: #000;
+  color: #fff;
+}
+
+/* === LABELS === */
+label {
+  display: block;
+  margin: 12px 0 6px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* === INPUTS (compact όπως στο screenshot) === */
+input {
+  width: 100%;
+  padding: 8px 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+/* === GSM GRID (μεγαλύτερα κουμπιά, ίδιο στυλ) === */
+.gsm-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 6px;
+  margin: 10px 0 15px;
+}
+
+.gsm-btn {
+  padding: 8px 0;
+  background: #e5e5e5;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.gsm-btn.active {
+  background: #000;
+  color: #fff;
+}
+
+/* === SIZE INPUTS === */
+.size-inputs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.size-inputs input {
+  flex: 1;
+}
+
+/* === SIZE GROUP TITLES === */
+.group-title {
+  font-size: 14px;
+  font-weight: 700;
+  margin: 14px 0 6px;
+}
+
+/* === SIZE BUTTON GRID (όπως στο screenshot) === */
+.size-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.size-btn {
+  padding: 6px 4px;
+  background: #e5e5e5;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px; /* ελαφρώς μεγαλύτερο όπως ζήτησες */
+  font-weight: 600;
+  text-align: center;
+}
+
+.size-btn.active {
+  background: #000;
+  color: #fff;
+}
+
+/* === RESULT BOX (premium “card”) === */
+.result-box {
+  margin-top: 20px;
+  background: #f7f7f7;
+  border: 1px solid #ddd;
+  padding: 16px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.result-box .big {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.result-box .small {
+  font-size: 14px;
+  opacity: 0.8;
+}

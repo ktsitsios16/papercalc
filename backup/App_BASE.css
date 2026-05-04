@@ -1,0 +1,192 @@
+/* === GLOBAL === */
+body {
+  margin: 0;
+  font-family: "Inter", Arial, sans-serif;
+  background: #f4f4f4;
+  color: #222;
+}
+
+.container {
+  max-width: 480px;
+  margin: 20px auto;
+  background: white;
+  padding: 22px;
+  border-radius: 14px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+}
+
+/* === HEADER === */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.header h1 {
+  font-size: 22px;
+  margin: 0;
+  font-weight: 700;
+}
+
+/* === LANGUAGE SWITCH === */
+.lang-switch button {
+  padding: 6px 12px;
+  border: none;
+  background: #e5e5e5;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.lang-switch .active {
+  background: #000;
+  color: #fff;
+}
+
+/* === TABS === */
+.tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.tabs button {
+  flex: 1;
+  padding: 10px;
+  background: #e5e5e5;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.tabs .active {
+  background: #000;
+  color: #fff;
+}
+
+/* === MODE SWITCH (Φύλλα / Τιμή) === */
+.mode-switch {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.mode-switch button {
+  flex: 1;
+  padding: 10px;
+  background: #e5e5e5;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.mode-switch .active {
+  background: #000;
+  color: #fff;
+}
+
+/* === INPUTS === */
+label {
+  display: block;
+  margin-top: 12px;
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 15px;
+  box-sizing: border-box;
+  transition: 0.2s;
+}
+
+input:focus {
+  border-color: #000;
+  outline: none;
+}
+
+/* === GSM GRID === */
+.gsm-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.gsm-btn {
+  padding: 8px;
+  background: #e5e5e5;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.gsm-btn.active {
+  background: #000;
+  color: #fff;
+}
+
+/* === SIZE INPUTS === */
+.size-inputs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+/* === SIZE BUTTON GROUPS === */
+.size-group {
+  margin-top: 18px;
+}
+
+.group-title {
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.size-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.size-btn {
+  padding: 10px;
+  background: #e5e5e5;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.size-btn.active {
+  background: #000;
+  color: #fff;
+}
+
+/* === RESULT BOX === */
+.result-box {
+  margin-top: 20px;
+  background: #fafafa;
+  padding: 18px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+}
+
+.result-box .big {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.result-box .small {
+  font-size: 14px;
+  opacity: 0.8;
+  margin-bottom: 4px;
+}
