@@ -80,8 +80,8 @@ export default function App() {
       sheets: "Φύλλα",
       price: "Κόστος",
       weight: "Βάρος Χαρτιών (kg)",
-      gsm: "Γραμμάρια (GSM)",
-      customGsm: "Άλλο βάρος (GSM)",
+      gsm: "Γραμμάρια Χαρτιού (GSM)",
+      customGsm: "Βάρος Χαρτιού (GSM)",
       size: "Διάσταση Χαρτιού (cm)",
       width: "Μήκος (cm)",
       height: "Ύψος (cm)",
@@ -96,8 +96,8 @@ export default function App() {
       sheets: "Sheets",
       price: "Price",
       weight: "Weight (kg)",
-      gsm: "GSM",
-      customGsm: "Custom weight (GSM)",
+      gsm: "Paper GSM",
+      customGsm: "Paper GSM",
       size: "Size (cm)",
       width: "Width (cm)",
       height: "Height (cm)",
@@ -151,7 +151,11 @@ export default function App() {
               setSize(s);
               setCustomSize({ w: String(s.w), h: String(s.h) });
             }}
-            className={activeW === s.w && activeH === s.h ? "size-btn active" : "size-btn"}
+            className={
+              activeW === s.w && activeH === s.h
+                ? "preset-button active"
+                : "preset-button"
+            }
           >
             {s.label}
           </button>
@@ -217,12 +221,26 @@ export default function App() {
           {sheetMode === "fromWeight" && (
             <>
               <label>{tr.weight}</label>
+
               <input
                 type="number"
                 placeholder="Κιλά"
                 value={weight === 0 ? "" : weight}
                 onChange={(e) => setWeight(Math.max(0, Number(e.target.value)))}
               />
+
+              {/* ΕΤΟΙΜΕΣ ΤΙΜΕΣ ΚΙΛΩΝ */}
+              <div className="weight-grid">
+                {[350, 500, 750, 1000, 1250, 1500].map((w) => (
+                  <button
+                    key={w}
+                    className="preset-button"
+                    onClick={() => setWeight(w)}
+                  >
+                    {w}
+                  </button>
+                ))}
+              </div>
             </>
           )}
 
@@ -254,7 +272,7 @@ export default function App() {
                   setGsm(g);
                   setCustomGsm(String(g));
                 }}
-                className={activeGsm === g ? "gsm-btn active" : "gsm-btn"}
+                className={activeGsm === g ? "preset-button active" : "preset-button"}
               >
                 {g}
               </button>
@@ -339,7 +357,7 @@ export default function App() {
                   setGsm(g);
                   setCustomGsm(String(g));
                 }}
-                className={activeGsm === g ? "gsm-btn active" : "gsm-btn"}
+                className={activeGsm === g ? "preset-button active" : "preset-button"}
               >
                 {g}
               </button>
