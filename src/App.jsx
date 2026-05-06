@@ -79,7 +79,7 @@ export default function App() {
     gr: {
       sheets: "Φύλλα",
       price: "Κόστος",
-      weight: "Βάρος Χαρτιών(kg)",
+      weight: "Βάρος Χαρτιών (kg)",
       gsm: "Γραμμάρια (GSM)",
       customGsm: "Άλλο βάρος (GSM)",
       size: "Διάσταση Χαρτιού (cm)",
@@ -119,10 +119,10 @@ export default function App() {
   const [gsm, setGsm] = useState(115);
   const [customGsm, setCustomGsm] = useState("");
 
-  const [size, setSize] = useState(SIZE_GROUPS["Δημοφιλής Διαστάσεις"][1]);
+  const [size, setSize] = useState(SIZE_GROUPS["Πρότυπες Διαστάσεις"][1]);
   const [customSize, setCustomSize] = useState({ w: "", h: "" });
 
-  const [weight, setWeight] = useState(1000);
+  const [weight, setWeight] = useState(0);
   const [price, setPrice] = useState(1.2);
   const [mode, setMode] = useState("kgToSheet");
 
@@ -140,7 +140,7 @@ export default function App() {
   const renderSizeButtons = (group) => (
     <div className="size-group">
       <div className="group-title">
-        {lang === "gr" ? group : group === "Δημοφιλής Διαστάσεις" ? tr.popularSizes : group}
+        {lang === "gr" ? group : group === "Πρότυπες Διαστάσεις" ? tr.popularSizes : group}
       </div>
 
       <div className="size-grid">
@@ -180,31 +180,27 @@ export default function App() {
         </div>
       </div>
 
-<div className="tabs" style={{ display: "flex", gap: "12px", marginBottom: "20px" }}>
-  
-  {/* ΦΥΛΛΑ */}
-  <button
-    onClick={() => setTab("sheets")}
-    className={tab === "sheets" ? "main-button active" : "main-button"}
-  >
-    <div className="icon">
-      <img src="/icons/palette-sheets.svg" width="20" />
-    </div>
-    {tr.sheets}
-  </button>
+      <div className="tabs" style={{ display: "flex", gap: "12px", marginBottom: "20px" }}>
+        <button
+          onClick={() => setTab("sheets")}
+          className={tab === "sheets" ? "main-button active" : "main-button"}
+        >
+          <div className="icon">
+            <img src="/icons/palette-sheets.svg" width="20" />
+          </div>
+          {tr.sheets}
+        </button>
 
-  {/* ΚΟΣΤΟΣ */}
-  <button
-    onClick={() => setTab("price")}
-    className={tab === "price" ? "main-button active" : "main-button"}
-  >
-    <div className="icon">
-      <img src="/icons/coin-weight-sheet.svg" width="20" />
-    </div>
-    {tr.price}
-  </button>
-
-</div>
+        <button
+          onClick={() => setTab("price")}
+          className={tab === "price" ? "main-button active" : "main-button"}
+        >
+          <div className="icon">
+            <img src="/icons/coin-weight-sheet.svg" width="20" />
+          </div>
+          {tr.price}
+        </button>
+      </div>
 
       {tab === "sheets" && (
         <>
@@ -221,14 +217,24 @@ export default function App() {
           {sheetMode === "fromWeight" && (
             <>
               <label>{tr.weight}</label>
-              <input type="number" value={weight} onChange={(e) => setWeight(Number(e.target.value))} />
+              <input
+                type="number"
+                placeholder="Κιλά"
+                value={weight === 0 ? "" : weight}
+                onChange={(e) => setWeight(Math.max(0, Number(e.target.value)))}
+              />
             </>
           )}
 
           {sheetMode === "fromSheets" && (
             <>
               <label>{lang === "gr" ? "Αριθμός Φύλλων" : "Number of Sheets"}</label>
-              <input type="number" value={sheetCount} onChange={(e) => setSheetCount(Number(e.target.value))} />
+              <input
+                type="number"
+                placeholder="0"
+                value={sheetCount === 0 ? "" : sheetCount}
+                onChange={(e) => setSheetCount(Math.max(0, Number(e.target.value)))}
+              />
             </>
           )}
 
@@ -237,7 +243,7 @@ export default function App() {
             type="number"
             placeholder={tr.customGsm}
             value={customGsm}
-            onChange={(e) => setCustomGsm(e.target.value)}
+            onChange={(e) => setCustomGsm(Math.max(0, Number(e.target.value)))}
           />
 
           <div className="gsm-grid">
@@ -257,11 +263,21 @@ export default function App() {
 
           <label>{tr.size}</label>
           <div className="size-inputs">
-            <input type="number" placeholder={tr.width} value={customSize.w} onChange={(e) => setCustomSize({ ...customSize, w: e.target.value })} />
-            <input type="number" placeholder={tr.height} value={customSize.h} onChange={(e) => setCustomSize({ ...customSize, h: e.target.value })} />
+            <input
+              type="number"
+              placeholder={tr.width}
+              value={customSize.w}
+              onChange={(e) => setCustomSize({ ...customSize, w: Math.max(0, Number(e.target.value)) })}
+            />
+            <input
+              type="number"
+              placeholder={tr.height}
+              value={customSize.h}
+              onChange={(e) => setCustomSize({ ...customSize, h: Math.max(0, Number(e.target.value)) })}
+            />
           </div>
 
-          {renderSizeButtons("Δημοφιλής Διαστάσεις")}
+          {renderSizeButtons("Πρότυπες Διαστάσεις")}
           {renderSizeButtons("A")}
           {renderSizeButtons("B")}
 
@@ -275,11 +291,11 @@ export default function App() {
 
             {sheetMode === "fromSheets" && (
               <>
- <div className="big">
-  {totalWeightFromSheets < 1
-    ? `${Math.round(totalWeightFromSheets * 1000)} g`
-    : `${totalWeightFromSheets.toFixed(2)} kg`}
-</div>
+                <div className="big">
+                  {totalWeightFromSheets < 1
+                    ? `${Math.round(totalWeightFromSheets * 1000)} g`
+                    : `${totalWeightFromSheets.toFixed(2)} kg`}
+                </div>
                 <div className="small">{tr.sheetWeightLabel}: {sheetWeight.toFixed(2)} g</div>
               </>
             )}
@@ -300,10 +316,20 @@ export default function App() {
           </div>
 
           <label>{mode === "kgToSheet" ? tr.priceKg : tr.priceSheet}</label>
-          <input type="number" value={price} onChange={(e) => setPrice(Number(e.target.value))} />
+          <input
+            type="number"
+            placeholder="0"
+            value={price === 0 ? "" : price}
+            onChange={(e) => setPrice(Math.max(0, Number(e.target.value)))}
+          />
 
           <label>{tr.gsm}</label>
-          <input type="number" placeholder={tr.customGsm} value={customGsm} onChange={(e) => setCustomGsm(e.target.value)} />
+          <input
+            type="number"
+            placeholder={tr.customGsm}
+            value={customGsm}
+            onChange={(e) => setCustomGsm(Math.max(0, Number(e.target.value)))}
+          />
 
           <div className="gsm-grid">
             {GSM_OPTIONS.map((g) => (
@@ -322,11 +348,21 @@ export default function App() {
 
           <label>{tr.size}</label>
           <div className="size-inputs">
-            <input type="number" placeholder={tr.width} value={customSize.w} onChange={(e) => setCustomSize({ ...customSize, w: e.target.value })} />
-            <input type="number" placeholder={tr.height} value={customSize.h} onChange={(e) => setCustomSize({ ...customSize, h: e.target.value })} />
+            <input
+              type="number"
+              placeholder={tr.width}
+              value={customSize.w}
+              onChange={(e) => setCustomSize({ ...customSize, w: Math.max(0, Number(e.target.value)) })}
+            />
+            <input
+              type="number"
+              placeholder={tr.height}
+              value={customSize.h}
+              onChange={(e) => setCustomSize({ ...customSize, h: Math.max(0, Number(e.target.value)) })}
+            />
           </div>
 
-          {renderSizeButtons("Δημοφιλής Διαστάσεις")}
+          {renderSizeButtons("Πρότυπες Διαστάσεις")}
           {renderSizeButtons("A")}
           {renderSizeButtons("B")}
 
