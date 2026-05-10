@@ -1,7 +1,11 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-})
+  server: {
+    host: true,          // επιτρέπει πρόσβαση από κινητό
+    port: 5173,          // σταθερή πόρτα
+    strictPort: true,    // δεν αλλάζει ποτέ πόρτα
+  }
+});

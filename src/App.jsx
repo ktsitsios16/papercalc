@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 
-const GSM_OPTIONS = [70, 80, 90, 100, 115, 130, 150, 170, 200, 250, 300, 350];
-
+/* ============================
+   SIZE GROUPS
+============================ */
 const SIZE_GROUPS = {
-  "Πρότυπες Διαστάσεις": [
+  standard: [
     { label: "50 x 70", w: 50, h: 70 },
     { label: "70 x 100", w: 70, h: 100 },
     { label: "72 x 102", w: 72, h: 102 },
@@ -30,41 +31,44 @@ const SIZE_GROUPS = {
   ]
 };
 
-function calcSheetWeight(gsm, w, h) {
-  if (!gsm || !w || !h) return 0;
-  return (w * h * gsm) / 10000;
-}
+const GSM_OPTIONS = [70, 80, 90, 100, 115, 130, 150, 170, 200, 250, 300, 350];
+const WEIGHT_OPTIONS = [350, 500, 750, 1000, 1250, 1500];
 
-function calcSheets(weightKg, gsm, w, h) {
+/* ============================
+   CALCULATIONS
+============================ */
+const calcSheetWeight = (gsm, w, h) =>
+  gsm && w && h ? (w * h * gsm) / 10000 : 0;
+
+const calcSheets = (kg, gsm, w, h) => {
   const sw = calcSheetWeight(gsm, w, h);
-  if (!sw) return 0;
-  return Math.round((weightKg * 1000) / sw);
-}
+  return sw ? Math.round((kg * 1000) / sw) : 0;
+};
 
-function calcTotalWeight(sheets, gsm, w, h) {
+const calcTotalWeight = (sheets, gsm, w, h) => {
   const sw = calcSheetWeight(gsm, w, h);
-  return (sw * sheets) / 1000;
-}
+  return sw ? (sw * sheets) / 1000 : 0;
+};
 
-function calcPricePerSheet(priceKg, gsm, w, h) {
+const calcPricePerSheet = (priceKg, gsm, w, h) => {
   const sw = calcSheetWeight(gsm, w, h);
-  return priceKg * (sw / 1000);
-}
+  return sw ? priceKg * (sw / 1000) : 0;
+};
 
-function calcPricePerKg(priceSheet, gsm, w, h) {
+const calcPricePerKg = (priceSheet, gsm, w, h) => {
   const sw = calcSheetWeight(gsm, w, h);
-  return (priceSheet * 1000) / sw;
-}
+  return sw ? (priceSheet * 1000) / sw : 0;
+};
 
+/* ============================
+   MAIN APP
+============================ */
 export default function App() {
   const [lang, setLang] = useState("gr");
   const [theme, setTheme] = useState("system");
 
-  const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-
-  const isDark =
-    theme === "dark" ||
-    (theme === "system" && systemPrefersDark);
+  const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const isDark = theme === "dark" || (theme === "system" && systemDark);
 
   useEffect(() => {
     const saved = localStorage.getItem("theme");
@@ -75,6 +79,9 @@ export default function App() {
     localStorage.setItem("theme", theme);
   }, [theme]);
 
+  /* ============================
+     TRANSLATIONS
+  ============================ */
   const t = {
     gr: {
       sheets: "Φύλλα",
@@ -89,8 +96,14 @@ export default function App() {
       priceSheet: "Τιμή Φύλλου €",
       sheetsResult: "φύλλα",
       sheetWeightLabel: "Βάρος φύλλου",
-      popularSizes: "Δημοφιλής Διαστάσεις",
-      perSheet: "€/φύλλο"
+      perSheet: "€/φύλλο",
+      sizeGroups: { standard: "Πρότυπες Διαστάσεις", A: "A", B: "B" },
+      sub: {
+        fromWeight: "Ποσότητα Φύλλων",
+        fromSheets: "Βάρος Συσκευασίας",
+        kgToSheet: "Τιμή Φύλλου",
+        sheetToKg: "Τιμή Κιλού"
+      }
     },
     en: {
       sheets: "Sheets",
@@ -105,291 +118,562 @@ export default function App() {
       priceSheet: "Price per Sheet €",
       sheetsResult: "sheets",
       sheetWeightLabel: "Sheet weight",
-      popularSizes: "Popular Sizes",
-      perSheet: "€/sheet"
+      perSheet: "€/sheet",
+      sizeGroups: { standard: "Standard Sizes", A: "A", B: "B" },
+      sub: {
+        fromWeight: "Sheets from Weight",
+        fromSheets: "Weight from Sheets",
+        kgToSheet: "Price per Sheet",
+        sheetToKg: "Price per Kg"
+      }
     }
   };
 
   const tr = t[lang];
 
+  /* ============================
+     STATES
+  ============================ */
   const [tab, setTab] = useState("sheets");
-  const [sheetMode, setSheetMode] = useState("fromWeight");
-  const [sheetCount, setSheetCount] = useState(100);
 
-  const [gsm, setGsm] = useState(115);
   const [customGsm, setCustomGsm] = useState("");
+  const activeGsm = Number(customGsm);
 
-  const [size, setSize] = useState(SIZE_GROUPS["Πρότυπες Διαστάσεις"][1]);
   const [customSize, setCustomSize] = useState({ w: "", h: "" });
+  const [activeSizeLabel, setActiveSizeLabel] = useState(null);
+
+  const w = Number(customSize.w);
+  const h = Number(customSize.h);
+
+  const sheetWeight = calcSheetWeight(activeGsm, w, h);
 
   const [weight, setWeight] = useState(0);
-  const [price, setPrice] = useState(1.2);
-  const [mode, setMode] = useState("kgToSheet");
+  const [activeWeightPreset, setActiveWeightPreset] = useState(null);
 
-  const activeGsm = customGsm ? Number(customGsm) : gsm;
-  const activeW = customSize.w ? Number(customSize.w) : size.w;
-  const activeH = customSize.h ? Number(customSize.h) : size.h;
+  const sheets = calcSheets(weight, activeGsm, w, h);
 
-  const sheetWeight = calcSheetWeight(activeGsm, activeW, activeH);
-  const sheets = calcSheets(weight, activeGsm, activeW, activeH);
-  const totalWeightFromSheets = calcTotalWeight(sheetCount, activeGsm, activeW, activeH);
+  const [sheetCount, setSheetCount] = useState(0);
+  const totalWeightFromSheets = calcTotalWeight(sheetCount, activeGsm, w, h);
 
-  const priceSheet = calcPricePerSheet(price, activeGsm, activeW, activeH);
-  const priceKg = calcPricePerKg(price, activeGsm, activeW, activeH);
+  const [priceInput, setPriceInput] = useState("");
+  const parsedPrice = Number(priceInput.replace(",", "."));
 
-  const renderSizeButtons = (group) => (
+  const priceSheet = calcPricePerSheet(parsedPrice, activeGsm, w, h);
+  const priceKg = calcPricePerKg(parsedPrice, activeGsm, w, h);
+
+  const [openSheetsMode, setOpenSheetsMode] = useState(null);
+  const [openPriceMode, setOpenPriceMode] = useState(null);
+
+  const accordionClass = (isOpen) =>
+    isOpen ? "accordion-content open" : "accordion-content";
+
+  /* ============================
+     SIZE BUTTONS
+  ============================ */
+  const renderSizeButtons = (groupKey) => (
     <div className="size-group">
-      <div className="group-title">
-        {lang === "gr" ? group : group === "Πρότυπες Διαστάσεις" ? tr.popularSizes : group}
-      </div>
-
+      <h4>{tr.sizeGroups[groupKey]}</h4>
       <div className="size-grid">
-        {SIZE_GROUPS[group].map((s) => (
+        {SIZE_GROUPS[groupKey].map((s) => (
           <button
-            key={s.label}
-            onClick={() => {
-              setSize(s);
-              setCustomSize({ w: String(s.w), h: String(s.h) });
-            }}
-            className={
-              activeW === s.w && activeH === s.h
-                ? "preset-button active"
-                : "preset-button"
-            }
-          >
-            {s.label}
-          </button>
+  key={s.label}
+  className={
+    activeSizeLabel === s.label ? "preset-button active" : "preset-button"
+  }
+  onClick={() => {
+    setCustomSize({ w: s.w, h: s.h });
+    setActiveSizeLabel(s.label);
+  }}
+>
+  {(() => {
+    const parts = s.label.split("(");
+    const main = parts[0].trim();
+    const dims = parts[1] ? "(" + parts[1] : "";
+    return (
+      <>
+        <span className="size-label">{main}</span>
+        {dims && <span className="size-dims">{dims}</span>}
+      </>
+    );
+  })()}
+</button>
         ))}
       </div>
     </div>
   );
 
+  /* ============================
+     UI START
+  ============================ */
   return (
     <div className={isDark ? "container dark" : "container"}>
+      {/* HEADER */}
       <div className="header">
         <h1>PaperCalc PRO</h1>
 
         <div className="top-controls">
-          <button onClick={() => setLang("gr")} className={lang === "gr" ? "active" : ""}>ΕΛ</button>
-          <button onClick={() => setLang("en")} className={lang === "en" ? "active" : ""}>EN</button>
 
-          <button
-            className="dark-toggle"
-            onClick={() =>
-              setTheme(theme === "dark" ? "light" : "dark")
-            }
-          >
-            {isDark ? "☀️" : "🌙"}
-          </button>
-        </div>
+  {/* 1η σειρά — Theme toggle */}
+  <div className="theme-row">
+    <button
+      className="dark-toggle"
+      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+    >
+      {isDark ? "☀️" : "🌙"}
+    </button>
+  </div>
+
+  {/* 2η σειρά — Language buttons */}
+  <div className="lang-row">
+    <button
+      onClick={() => setLang("gr")}
+      className={lang === "gr" ? "preset-button active" : "preset-button"}
+    >
+      ΕΛ
+    </button>
+
+    <button
+      onClick={() => setLang("en")}
+      className={lang === "en" ? "preset-button active" : "preset-button"}
+    >
+      EN
+    </button>
+  </div>
+
+</div>
       </div>
 
-      <div className="tabs" style={{ display: "flex", gap: "12px", marginBottom: "20px" }}>
+      {/* MAIN TABS */}
+      <div className="tabs" style={{ display: "flex", gap: "12px", marginBottom: "8px" }}>
         <button
-          onClick={() => setTab("sheets")}
+          onClick={() => {
+            setTab("sheets");
+            setOpenSheetsMode(null);
+            setOpenPriceMode(null);
+          }}
           className={tab === "sheets" ? "main-button active" : "main-button"}
         >
-          <div className="icon">
-            <img src="/icons/palette-sheets.svg" width="20" />
-          </div>
           {tr.sheets}
         </button>
 
         <button
-          onClick={() => setTab("price")}
+          onClick={() => {
+            setTab("price");
+            setOpenSheetsMode(null);
+            setOpenPriceMode(null);
+          }}
           className={tab === "price" ? "main-button active" : "main-button"}
         >
-          <div className="icon">
-            <img src="/icons/coin-weight-sheet.svg" width="20" />
-          </div>
           {tr.price}
         </button>
       </div>
 
+      {/* SUBCATEGORY BUTTONS — 50/50 */}
+      {tab === "sheets" && (
+        <div className="sub-grid">
+          <button
+            className={openSheetsMode === "fromWeight" ? "sub-button active" : "sub-button"}
+            onClick={() =>
+              setOpenSheetsMode(openSheetsMode === "fromWeight" ? null : "fromWeight")
+            }
+          >
+            {tr.sub.fromWeight}
+          </button>
+
+          <button
+            className={openSheetsMode === "fromSheets" ? "sub-button active" : "sub-button"}
+            onClick={() =>
+              setOpenSheetsMode(openSheetsMode === "fromSheets" ? null : "fromSheets")
+            }
+          >
+            {tr.sub.fromSheets}
+          </button>
+        </div>
+      )}
+
+      {tab === "price" && (
+        <div className="sub-grid">
+          <button
+            className={openPriceMode === "kgToSheet" ? "sub-button active" : "sub-button"}
+            onClick={() =>
+              setOpenPriceMode(openPriceMode === "kgToSheet" ? null : "kgToSheet")
+            }
+          >
+            {tr.sub.kgToSheet}
+          </button>
+
+          <button
+            className={openPriceMode === "sheetToKg" ? "sub-button active" : "sub-button"}
+            onClick={() =>
+              setOpenPriceMode(openPriceMode === "sheetToKg" ? null : "sheetToKg")
+            }
+          >
+            {tr.sub.sheetToKg}
+          </button>
+        </div>
+      )}
+
+      {/* ============================
+          SHEETS TAB — ACCORDIONS
+      ============================ */}
       {tab === "sheets" && (
         <>
-          <div className="mode-switch">
-            <button onClick={() => setSheetMode("fromWeight")} className={sheetMode === "fromWeight" ? "active" : ""}>
-              {lang === "gr" ? "Ποσότητα Φύλλων" : "Sheets from Weight"}
-            </button>
+          {/* ===== FROM WEIGHT ===== */}
+          <div className={accordionClass(openSheetsMode === "fromWeight")}>
+            {openSheetsMode === "fromWeight" && (
+              <div className="accordion-inner">
+                {/* WEIGHT INPUT */}
+                <label>{tr.weight}</label>
+                <input
+                  type="number"
+                  placeholder="0"
+                  value={weight === 0 ? "" : weight}
+                  onChange={(e) => {
+                    setWeight(Math.max(0, Number(e.target.value)));
+                    setActiveWeightPreset(null);
+                  }}
+                />
 
-            <button onClick={() => setSheetMode("fromSheets")} className={sheetMode === "fromSheets" ? "active" : ""}>
-              {lang === "gr" ? "Βάρος Συσκευασίας" : "Weight from Sheets"}
-            </button>
-          </div>
-
-          {sheetMode === "fromWeight" && (
-            <>
-              <label>{tr.weight}</label>
-
-              <input
-                type="number"
-                placeholder="Κιλά"
-                value={weight === 0 ? "" : weight}
-                onChange={(e) => setWeight(Math.max(0, Number(e.target.value)))}
-              />
-
-              {/* ΕΤΟΙΜΕΣ ΤΙΜΕΣ ΚΙΛΩΝ */}
-              <div className="weight-grid">
-                {[350, 500, 750, 1000, 1250, 1500].map((w) => (
-                  <button
-                    key={w}
-                    className="preset-button"
-                    onClick={() => setWeight(w)}
-                  >
-                    {w}
-                  </button>
-                ))}
-              </div>
-            </>
-          )}
-
-          {sheetMode === "fromSheets" && (
-            <>
-              <label>{lang === "gr" ? "Αριθμός Φύλλων" : "Number of Sheets"}</label>
-              <input
-                type="number"
-                placeholder="0"
-                value={sheetCount === 0 ? "" : sheetCount}
-                onChange={(e) => setSheetCount(Math.max(0, Number(e.target.value)))}
-              />
-            </>
-          )}
-
-          <label>{tr.gsm}</label>
-          <input
-            type="number"
-            placeholder={tr.customGsm}
-            value={customGsm}
-            onChange={(e) => setCustomGsm(Math.max(0, Number(e.target.value)))}
-          />
-
-          <div className="gsm-grid">
-            {GSM_OPTIONS.map((g) => (
-              <button
-                key={g}
-                onClick={() => {
-                  setGsm(g);
-                  setCustomGsm(String(g));
-                }}
-                className={activeGsm === g ? "preset-button active" : "preset-button"}
-              >
-                {g}
-              </button>
-            ))}
-          </div>
-
-          <label>{tr.size}</label>
-          <div className="size-inputs">
-            <input
-              type="number"
-              placeholder={tr.width}
-              value={customSize.w}
-              onChange={(e) => setCustomSize({ ...customSize, w: Math.max(0, Number(e.target.value)) })}
-            />
-            <input
-              type="number"
-              placeholder={tr.height}
-              value={customSize.h}
-              onChange={(e) => setCustomSize({ ...customSize, h: Math.max(0, Number(e.target.value)) })}
-            />
-          </div>
-
-          {renderSizeButtons("Πρότυπες Διαστάσεις")}
-          {renderSizeButtons("A")}
-          {renderSizeButtons("B")}
-
-          <div className="result-box">
-            {sheetMode === "fromWeight" && (
-              <>
-                <div className="big">{sheets.toLocaleString()} {tr.sheetsResult}</div>
-                <div className="small">{tr.sheetWeightLabel}: {sheetWeight.toFixed(2)} g</div>
-              </>
-            )}
-
-            {sheetMode === "fromSheets" && (
-              <>
-                <div className="big">
-                  {totalWeightFromSheets < 1
-                    ? `${Math.round(totalWeightFromSheets * 1000)} g`
-                    : `${totalWeightFromSheets.toFixed(2)} kg`}
+                {/* WEIGHT PRESETS */}
+                <div className="weight-grid">
+                  {WEIGHT_OPTIONS.map((wOpt) => (
+                    <button
+                      key={wOpt}
+                      className={
+                        activeWeightPreset === wOpt
+                          ? "preset-button active"
+                          : "preset-button"
+                      }
+                      onClick={() => {
+                        setWeight(wOpt);
+                        setActiveWeightPreset(wOpt);
+                      }}
+                    >
+                      {wOpt}
+                    </button>
+                  ))}
                 </div>
-                <div className="small">{tr.sheetWeightLabel}: {sheetWeight.toFixed(2)} g</div>
-              </>
+
+                {/* GSM INPUT */}
+                <label>{tr.gsm}</label>
+                <input
+                  type="number"
+                  placeholder={tr.customGsm}
+                  value={customGsm}
+                  onChange={(e) => setCustomGsm(Math.max(0, Number(e.target.value)))}
+                />
+
+                {/* GSM PRESETS */}
+                <div className="gsm-grid">
+                  {GSM_OPTIONS.map((g) => (
+                    <button
+                      key={g}
+                      onClick={() => setCustomGsm(String(g))}
+                      className={activeGsm === g ? "preset-button active" : "preset-button"}
+                    >
+                      {g}
+                    </button>
+                  ))}
+                </div>
+
+                {/* SIZE INPUTS */}
+                <label>{tr.size}</label>
+                <div className="size-inputs">
+                  <input
+                    type="number"
+                    placeholder={tr.width}
+                    value={customSize.w}
+                    onChange={(e) =>
+                      setCustomSize({
+                        ...customSize,
+                        w: Math.max(0, Number(e.target.value))
+                      })
+                    }
+                  />
+                  <input
+                    type="number"
+                    placeholder={tr.height}
+                    value={customSize.h}
+                    onChange={(e) =>
+                      setCustomSize({
+                        ...customSize,
+                        h: Math.max(0, Number(e.target.value))
+                      })
+                    }
+                  />
+                </div>
+
+                {/* SIZE PRESETS */}
+                {renderSizeButtons("standard")}
+                {renderSizeButtons("A")}
+                {renderSizeButtons("B")}
+
+                {/* RESULT */}
+                <div className="result-box">
+                  <div className="big">
+                    {sheets.toLocaleString()} {tr.sheetsResult}
+                  </div>
+                  <div className="small">
+                    {tr.sheetWeightLabel}: {sheetWeight.toFixed(2)} g
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* ===== FROM SHEETS ===== */}
+          <div className={accordionClass(openSheetsMode === "fromSheets")}>
+            {openSheetsMode === "fromSheets" && (
+              <div className="accordion-inner">
+                {/* SHEET COUNT */}
+                <label>{lang === "gr" ? "Αριθμός Φύλλων" : "Number of Sheets"}</label>
+                <input
+                  type="number"
+                  placeholder="0"
+                  value={sheetCount === 0 ? "" : sheetCount}
+                  onChange={(e) => setSheetCount(Math.max(0, Number(e.target.value)))}
+                />
+
+                {/* GSM INPUT */}
+                <label>{tr.gsm}</label>
+                <input
+                  type="number"
+                  placeholder={tr.customGsm}
+                  value={customGsm}
+                  onChange={(e) => setCustomGsm(Math.max(0, Number(e.target.value)))}
+                />
+
+                {/* GSM PRESETS */}
+                <div className="gsm-grid">
+                  {GSM_OPTIONS.map((g) => (
+                    <button
+                      key={g}
+                      onClick={() => setCustomGsm(String(g))}
+                      className={activeGsm === g ? "preset-button active" : "preset-button"}
+                    >
+                      {g}
+                    </button>
+                  ))}
+                </div>
+
+                {/* SIZE INPUTS */}
+                <label>{tr.size}</label>
+                <div className="size-inputs">
+                  <input
+                    type="number"
+                    placeholder={tr.width}
+                    value={customSize.w}
+                    onChange={(e) =>
+                      setCustomSize({
+                        ...customSize,
+                        w: Math.max(0, Number(e.target.value))
+                      })
+                    }
+                  />
+                  <input
+                    type="number"
+                    placeholder={tr.height}
+                    value={customSize.h}
+                    onChange={(e) =>
+                      setCustomSize({
+                        ...customSize,
+                        h: Math.max(0, Number(e.target.value))
+                      })
+                    }
+                  />
+                </div>
+
+                {/* SIZE PRESETS */}
+                {renderSizeButtons("standard")}
+                {renderSizeButtons("A")}
+                {renderSizeButtons("B")}
+
+                {/* RESULT */}
+                <div className="result-box">
+                  <div className="big">
+                    {totalWeightFromSheets < 1
+                      ? `${Math.round(totalWeightFromSheets * 1000)} g`
+                      : `${totalWeightFromSheets.toFixed(2)} kg`}
+                  </div>
+                  <div className="small">
+                    {tr.sheetWeightLabel}: {sheetWeight.toFixed(2)} g
+                  </div>
+                </div>
+              </div>
             )}
           </div>
         </>
       )}
 
+      {/* ============================
+          PRICE TAB — ACCORDIONS
+      ============================ */}
       {tab === "price" && (
         <>
-          <div className="mode-switch">
-            <button onClick={() => setMode("kgToSheet")} className={mode === "kgToSheet" ? "active" : ""}>
-              {tr.priceSheet}
-            </button>
+          {/* ===== PRICE PER SHEET ===== */}
+          <div className={accordionClass(openPriceMode === "kgToSheet")}>
+            {openPriceMode === "kgToSheet" && (
+              <div className="accordion-inner">
+                {/* PRICE INPUT (keeps user format) */}
+                <label>{tr.priceKg}</label>
+                <input
+                  type="text"
+                  placeholder="0,00"
+                  value={priceInput}
+                  onChange={(e) => {
+                    const v = e.target.value;
+                    if (/^[0-9.,]*$/.test(v)) setPriceInput(v);
+                  }}
+                />
 
-            <button onClick={() => setMode("sheetToKg")} className={mode === "sheetToKg" ? "active" : ""}>
-              {tr.priceKg}
-            </button>
+                {/* GSM INPUT */}
+                <label>{tr.gsm}</label>
+                <input
+                  type="number"
+                  placeholder={tr.customGsm}
+                  value={customGsm}
+                  onChange={(e) => setCustomGsm(Math.max(0, Number(e.target.value)))}
+                />
+
+                {/* GSM PRESETS */}
+                <div className="gsm-grid">
+                  {GSM_OPTIONS.map((g) => (
+                    <button
+                      key={g}
+                      onClick={() => setCustomGsm(String(g))}
+                      className={activeGsm === g ? "preset-button active" : "preset-button"}
+                    >
+                      {g}
+                    </button>
+                  ))}
+                </div>
+
+                {/* SIZE INPUTS */}
+                <label>{tr.size}</label>
+                <div className="size-inputs">
+                  <input
+                    type="number"
+                    placeholder={tr.width}
+                    value={customSize.w}
+                    onChange={(e) =>
+                      setCustomSize({
+                        ...customSize,
+                        w: Math.max(0, Number(e.target.value))
+                      })
+                    }
+                  />
+                  <input
+                    type="number"
+                    placeholder={tr.height}
+                    value={customSize.h}
+                    onChange={(e) =>
+                      setCustomSize({
+                        ...customSize,
+                        h: Math.max(0, Number(e.target.value))
+                      })
+                    }
+                  />
+                </div>
+
+                {/* SIZE PRESETS */}
+                {renderSizeButtons("standard")}
+                {renderSizeButtons("A")}
+                {renderSizeButtons("B")}
+
+                {/* RESULT */}
+                <div className="result-box">
+                  <div className="big">
+                    {priceSheet ? priceSheet.toFixed(4) + " " + tr.perSheet : "-"}
+                  </div>
+                  <div className="small">
+                    {tr.sheetWeightLabel}: {sheetWeight.toFixed(2)} g
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
-          <label>{mode === "kgToSheet" ? tr.priceKg : tr.priceSheet}</label>
-          <input
-            type="number"
-            placeholder="0"
-            value={price === 0 ? "" : price}
-            onChange={(e) => setPrice(Math.max(0, Number(e.target.value)))}
-          />
+          {/* ===== PRICE PER KG ===== */}
+          <div className={accordionClass(openPriceMode === "sheetToKg")}>
+            {openPriceMode === "sheetToKg" && (
+              <div className="accordion-inner">
+                {/* PRICE INPUT */}
+                <label>{tr.priceSheet}</label>
+                <input
+                  type="text"
+                  placeholder="0,00"
+                  value={priceInput}
+                  onChange={(e) => {
+                    const v = e.target.value;
+                    if (/^[0-9.,]*$/.test(v)) setPriceInput(v);
+                  }}
+                />
 
-          <label>{tr.gsm}</label>
-          <input
-            type="number"
-            placeholder={tr.customGsm}
-            value={customGsm}
-            onChange={(e) => setCustomGsm(Math.max(0, Number(e.target.value)))}
-          />
+                {/* GSM INPUT */}
+                <label>{tr.gsm}</label>
+                <input
+                  type="number"
+                  placeholder={tr.customGsm}
+                  value={customGsm}
+                  onChange={(e) => setCustomGsm(Math.max(0, Number(e.target.value)))}
+                />
 
-          <div className="gsm-grid">
-            {GSM_OPTIONS.map((g) => (
-              <button
-                key={g}
-                onClick={() => {
-                  setGsm(g);
-                  setCustomGsm(String(g));
-                }}
-                className={activeGsm === g ? "preset-button active" : "preset-button"}
-              >
-                {g}
-              </button>
-            ))}
-          </div>
+                {/* GSM PRESETS */}
+                <div className="gsm-grid">
+                  {GSM_OPTIONS.map((g) => (
+                    <button
+                      key={g}
+                      onClick={() => setCustomGsm(String(g))}
+                      className={activeGsm === g ? "preset-button active" : "preset-button"}
+                    >
+                      {g}
+                    </button>
+                  ))}
+                </div>
 
-          <label>{tr.size}</label>
-          <div className="size-inputs">
-            <input
-              type="number"
-              placeholder={tr.width}
-              value={customSize.w}
-              onChange={(e) => setCustomSize({ ...customSize, w: Math.max(0, Number(e.target.value)) })}
-            />
-            <input
-              type="number"
-              placeholder={tr.height}
-              value={customSize.h}
-              onChange={(e) => setCustomSize({ ...customSize, h: Math.max(0, Number(e.target.value)) })}
-            />
-          </div>
+                {/* SIZE INPUTS */}
+                <label>{tr.size}</label>
+                <div className="size-inputs">
+                  <input
+                    type="number"
+                    placeholder={tr.width}
+                    value={customSize.w}
+                    onChange={(e) =>
+                      setCustomSize({
+                        ...customSize,
+                        w: Math.max(0, Number(e.target.value))
+                      })
+                    }
+                  />
+                  <input
+                    type="number"
+                    placeholder={tr.height}
+                    value={customSize.h}
+                    onChange={(e) =>
+                      setCustomSize({
+                        ...customSize,
+                        h: Math.max(0, Number(e.target.value))
+                      })
+                    }
+                  />
+                </div>
 
-          {renderSizeButtons("Πρότυπες Διαστάσεις")}
-          {renderSizeButtons("A")}
-          {renderSizeButtons("B")}
+                {/* SIZE PRESETS */}
+                {renderSizeButtons("standard")}
+                {renderSizeButtons("A")}
+                {renderSizeButtons("B")}
 
-          <div className="result-box">
-            <div className="big">
-              {mode === "kgToSheet"
-                ? `${priceSheet.toFixed(3)} ${tr.perSheet}`
-                : `${priceKg.toFixed(2)} €/kg`}
-            </div>
+                {/* RESULT */}
+                <div className="result-box">
+                  <div className="big">
+                    {priceKg ? priceKg.toFixed(3) + " €/kg" : "-"}
+                  </div>
+                  <div className="small">
+                    {tr.sheetWeightLabel}: {sheetWeight.toFixed(2)} g
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </>
       )}

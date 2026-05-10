@@ -1,289 +1,384 @@
-/* === GLOBAL === */
-body {
-  margin: 0;
-  font-family: "Inter", Arial, sans-serif;
+/* ------------------------------------------------------ */
+/* ROOT + THEMES                                           */
+/* ------------------------------------------------------ */
+
+:root {
+  --bg: #f5f5f5;
+  --fg: #111;
+  --card: #ffffff;
+  --border: #d0d0d0;
+  --accent: #0078ff;
+  --button-bg: #e9e9e9;
+  --button-active: #0078ff;
+  --button-active-text: #fff;
+  --input-bg: #fff;
+  --input-border: #c8c8c8;
 }
 
-input {
-  width: 100%;
-  padding: 15px 16px;
-  font-size: 22px;
-  font-family: "Inter", Arial, sans-serif;
-  font-weight: 500;
-  border: 2px solid #b5b5b5;
-  border-radius: 8px;
-  background: #fafafa;
-  color: #222;
-  box-sizing: border-box;
-}
-
-input:focus {
-  outline: none;
-  border-color: #000;
-}
-
-/* === CONTAINER === */
-.container {
-  max-width: 480px;
-  margin: 20px auto;
-  background: #ffffff;
-  padding: 20px;
-  border-radius: 10px;
-  border: 2px solid #d0d0d0;
-  box-sizing: border-box;
-  transition: background 0.3s, color 0.3s, border-color 0.3s;
-}
-
-/* === DARK MODE === */
 .container.dark {
-  background: #1e1e1e;
-  color: #f0f0f0;
-  border-color: #444;
+  --bg: #0f0f0f;
+  --fg: #f5f5f5;
+  --card: #1a1a1a;
+  --border: #333;
+  --accent: #0a84ff;
+  --button-bg: #222;
+  --button-active: #0a84ff;
+  --button-active-text: #000;
+  --input-bg: #111;
+  --input-border: #444;
 }
 
-.container.dark label {
-  color: #eaeaea;
+/* ------------------------------------------------------ */
+/* LAYOUT                                                  */
+/* ------------------------------------------------------ */
+
+.container {
+  background: var(--bg);
+  color: var(--fg);
+  min-height: 100vh;
+  padding: 24px;
+  font-family: Inter, sans-serif;
 }
 
-.container.dark input {
-  background: #2b2b2b;
-  border-color: #555;
-  color: #fff;
+/* FIXED WIDTH + MOBILE SAFE */
+.container {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 24px;
 }
 
-.container.dark .result-box {
-  background: #242424;
-  border-color: #555;
-  color: #fff;
+/* TABLET */
+@media (min-width: 600px) {
+  .container {
+    max-width: 640px;
+  }
 }
 
-/* === HEADER === */
+/* DESKTOP */
+@media (min-width: 600px) {
+  .container {
+    max-width: 480px;
+  }
+}
+
+
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 18px;
+  margin-bottom: 24px;
 }
 
-.header h1 {
-  font-size: 22px;
-  margin: 0;
-  font-weight: 800;
-  letter-spacing: -0.5px;
-}
+/* ------------------------------------------------------ */
+/* FULL‑UNIFIED BUTTON SYSTEM                              */
+/* ------------------------------------------------------ */
 
-.top-controls {
-  display: flex;
-  gap: 6px;
-}
-
-.top-controls button {
-  padding: 6px 12px;
-  border: 2px solid #c8c8c8;
-  background: #e8e8e8;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 700;
-}
-
-.top-controls .active {
-  background: #000;
-  color: #00a6ff;
-  border-color: #000;
-}
-
-.dark-toggle {
-  background: #000;
-  color: #fff;
-}
-
-/* === TABS === */
-.tabs {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
+.main-button,
+.preset-button {
   width: 100%;
-  margin-bottom: 20px;
-}
-
-.main-button {
+  background: var(--button-bg);
+  border: 1px solid var(--border);
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 15px;
+  color: var(--fg);
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 16px 20px;
-  background: #d6d6d6;
-  border: 2px solid #8c8c8c;
-  border-radius: 10px;
-  cursor: pointer;
-  font-family: "Inter", Arial, sans-serif;
-  font-weight: 600;
-  color: #111;
-  transition: background 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
-}
-.main-button {
-  width: 100%;
   justify-content: center;
-}
-.main-button:hover {
-  background: #c8c8c8;
-  border-color: #555;
+  transition: 0.2s ease;
+  min-height: 40px;
 }
 
-.main-button.active {
-  background: #000;
-  color: #fff;
-  border-color: #000;
+.main-button.active,
+.preset-button.active,
+.main-button:hover,
+.preset-button:hover {
+  background: var(--button-active);
+  color: var(--button-active-text);
+  border-color: var(--button-active);
 }
 
-.main-button:active {
-  background: #bfbfbf;
-  border-color: #333;
-  transform: scale(0.97);
-}
+/* ------------------------------------------------------ */
+/* INPUTS                                                  */
+/* ------------------------------------------------------ */
 
-/* === MODE SWITCH === */
-.mode-switch {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 15px;
-}
-
-.mode-switch button {
-  flex: 1;
-  padding: 10px;
-  background: #e8e8e8;
-  border: 2px solid #c8c8c8;
+input {
+  width: 100%;
+  padding: 12px;
+  margin: 6px 0 14px 0;
   border-radius: 6px;
-  cursor: pointer;
-  font-weight: 700;
+  border: 1px solid var(--input-border);
+  background: var(--input-bg);
+  color: var(--fg);
+  font-size: 16px;
+  font-weight: 500;
 }
 
-.mode-switch .active {
-  background: #000;
-  color: #fff;
-  border-color: #000;
-}
+/* ------------------------------------------------------ */
+/* FULL‑UNIFIED GRID SYSTEM                                */
+/* ------------------------------------------------------ */
 
-/* === LABELS === */
-label {
-  display: block;
-  margin: 12px 0 6px;
-  font-size: 18px;
-  font-weight: 900;
-  letter-spacing: -0.2px;
-}
-
-/* === GSM GRID === */
-.gsm-grid {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 6px;
-  margin: 10px 0 15px;
-}
-
-/* === SIZE INPUTS === */
-.size-inputs {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 10px;
-}
-
-.size-inputs input {
-  flex: 1;
-}
-
-/* === SIZE GROUP TITLES === */
-.group-title {
-  font-size: 14px;
-  font-weight: 800;
-  margin: 4px 0 2px;
-  letter-spacing: -0.2px;
-}
-
-/* === SIZE GRID === */
+.gsm-grid,
+.weight-grid,
 .size-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 6px;
+  gap: 8px;
+  margin-bottom: 16px;
 }
 
-/* === PRESET BUTTONS (GSM, SIZE, WEIGHT) === */
-.preset-button {
-  background: #7a7a7a;        /* πιο φωτεινό, ~50% μαύρο */
-  color: #111;
-  border: 2px solid #9c9c9c;  /* πιο φωτεινό industrial border */
-  border-radius: 6px;
-  padding: 10px 14px;
-  font-family: "Inter", Arial, sans-serif;
-  font-weight: 600;
-  cursor: pointer;
-  width: 100%;
-  transition: background 0.15s ease, border-color 0.15s ease;
+/* ------------------------------------------------------ */
+/* SIZE GROUPS                                             */
+/* ------------------------------------------------------ */
+
+.size-inputs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
 }
 
-.preset-button:hover {
-  background: #6c6c6c;        /* hover λίγο πιο σκούρο */
-  border-color: #777;
+.size-group {
+  margin-top: 12px;
+  margin-bottom: 12px;
 }
 
-.preset-button.active {
-  background: #000;           /* active = μαύρο */
-  color: #fff;
-  border-color: #000;
-}
-
-.preset-button:active {
-  background: #bfbfbf;        /* pressed state */
-  border-color: #555;
-}
-/* === SIZE BUTTON FIX FOR MOBILE === */
-.preset-button {
-  white-space: nowrap;
+.size-group h4 {
+  margin-bottom: 6px;
   font-size: 14px;
-  letter-spacing: -0.3px;
-  min-width: 0;
+  font-weight: 600;
+  opacity: 0.85;
 }
 
-/* ΜΟΝΟ στο κινητό */
-@media (max-width: 480px) {
-  .preset-button {
-    font-size: 12px;
-    padding: 8px 6px;
-    letter-spacing: -0.5px;
-  }
+/* ------------------------------------------------------ */
+/* RESULT BOX                                              */
+/* ------------------------------------------------------ */
 
-  .size-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 4px;
-  }
-}
-/* === WEIGHT GRID === */
-.weight-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 6px;
-  margin-top: 10px;
-}
-
-/* === RESULT BOX === */
 .result-box {
-  margin-top: 20px;
-  background: #d8fce6;
-  border: 2px solid #014120;
+  background: var(--card);
+  border: 1px solid var(--border);
   padding: 16px;
   border-radius: 8px;
-  text-align: center;
-  color: #222;
+  margin-top: 14px;
 }
 
 .result-box .big {
   font-size: 26px;
-  font-weight: 900;
-  margin-bottom: 6px;
-  letter-spacing: -0.4px;
+  font-weight: 700;
+  margin-bottom: 4px;
 }
 
 .result-box .small {
   font-size: 14px;
-  opacity: 0.85;
+  opacity: 0.7;
+}
+
+/* ------------------------------------------------------ */
+/* ACCORDION                                               */
+/* ------------------------------------------------------ */
+
+.accordion-content {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transform: translateY(-6px);
+  transition:
+    max-height 0.35s ease,
+    opacity 0.35s ease,
+    transform 0.35s ease;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+.accordion-content.open {
+  max-height: 2000px;
+  opacity: 1;
+  transform: translateY(0);
+  margin-top: 12px;
+}
+
+.accordion-inner {
+  padding-bottom: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ------------------------------------------------------ */
+/* DARK MODE POLISH                                        */
+/* ------------------------------------------------------ */
+
+.container.dark .result-box {
+  background: #141414;
+}
+
+.container.dark input {
+  background: #111;
+  border-color: #333;
+}
+
+.container.dark .preset-button,
+.container.dark .main-button {
+  background: var(--button-bg);
+}
+
+.container.dark .preset-button.active,
+.container.dark .main-button.active {
+  background: var(--button-active);
+  color: var(--button-active-text);
+  border-color: var(--button-active);
+}
+/* ============================================
+   SUBCATEGORY BUTTONS — SAME STYLE AS MAIN
+============================================ */
+.sub-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.sub-button {
+  background: var(--button-bg);
+  border: 1px solid var(--border);
+  padding: 8px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--fg);
+  transition: 0.2s ease;
+  width: 100%;
+}
+
+.sub-button.active,
+.sub-button:hover {
+  background: var(--button-active);
+  color: var(--button-active-text);
+  border-color: var(--button-active);
+}
+/* ============================================
+   TOP CONTROLS — LANGUAGE + THEME IN ONE ROW
+============================================ */
+.top-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.top-controls button {
+  height: 36px; /* ίδιο ύψος για όλα */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 14px;
+}
+/* ============================================
+   TOP CONTROLS — THEME ON TOP, LANG BELOW
+============================================ */
+.top-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; /* όλα δεξιά */
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+/* 1η σειρά — theme toggle */
+.theme-row {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+/* 2η σειρά — language buttons */
+.lang-row {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+/* Ίδιο ύψος για όλα */
+.theme-row button,
+.lang-row button {
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 14px;
+}
+/* ============================================
+   HEADER TITLE — SMALLER + FIXED COLORS
+============================================ */
+.header h1 {
+  font-size: 32px; /* 25% μικρότερο από ~32px */
+  font-weight: 600;
+  margin: 0;
+  padding: 0;
+}
+
+/* Φωτεινή έκδοση — πιο σκούρο χρώμα για να διαβάζεται */
+.container:not(.dark) .header h1 {
+  color: #222; /* καθαρό, ευανάγνωστο */
+}
+
+/* Σκούρα έκδοση — κρατάμε το υπάρχον */
+.container.dark .header h1 {
+  color: #fff;
+}
+/* ============================================
+   FIX SPACING ONLY FOR PAPER SIZE CATEGORY
+============================================ */
+
+/* Μειώνουμε το κενό κάτω από τα input πεδία */
+.size-inputs {
+  margin-bottom: -14px; /* από 16px → 6px */
+}
+
+/* Μειώνουμε το κενό πάνω από τις επικεφαλίδες (Πρότυπες, A, B) */
+.size-group {
+  margin-top: -10px; /* από 12px → 4px */
+  margin-bottom: -10px; /* από 12px → 8px */
+}
+
+/* Μειώνουμε το κενό κάτω από τα κουμπιά “εκ” */
+.size-grid {
+  margin-bottom: 18x; /* από 16px → 10px */
+}
+/* ============================================
+   PREMIUM LOOK FOR A/B SIZE BUTTONS
+============================================ */
+
+/* Το label (A0, A1, B0...) πιο έντονο και καθαρό */
+.preset-button .size-label {
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.2px;
+  color: var(--fg);
+}
+
+/* Οι διαστάσεις σε παρενθέσεις πιο απαλές */
+.preset-button .size-dims {
+  opacity: 0.55;
+  font-size: 13px;
+  font-weight: 400;
+  margin-left: 2px;
+}
+
+/* Premium alignment */
+.preset-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+}
+
+/* Active state ακόμα πιο premium */
+.preset-button.active .size-label {
+  color: var(--button-active-text);
+}
+
+.preset-button.active .size-dims {
+  opacity: 0.75;
 }

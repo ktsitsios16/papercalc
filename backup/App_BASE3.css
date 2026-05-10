@@ -1,0 +1,317 @@
+/* === GLOBAL === */
+body {
+  margin: 0;
+  font-family: "Inter", Arial, sans-serif;
+}
+
+input {
+  width: 100%;
+  padding: 15px 16px;
+  font-size: 22px;
+  font-family: "Inter", Arial, sans-serif;
+  font-weight: 500;
+  border: 2px solid #b5b5b5;
+  border-radius: 8px;
+  background: #fafafa;
+  color: #222;
+  box-sizing: border-box;
+}
+
+input:focus {
+  outline: none;
+  border-color: #000;
+}
+
+/* === CONTAINER === */
+.container {
+  max-width: 480px;
+  margin: 20px auto;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  border: 2px solid #d0d0d0;
+  box-sizing: border-box;
+  transition: background 0.3s, color 0.3s, border-color 0.3s;
+}
+
+/* === DARK MODE === */
+.container.dark {
+  background: #1e1e1e;
+  color: #f0f0f0;
+  border-color: #444;
+}
+
+.container.dark label {
+  color: #eaeaea;
+}
+
+.container.dark input {
+  background: #2b2b2b;
+  border-color: #555;
+  color: #fff;
+}
+
+.container.dark .result-box {
+  background: #242424;
+  border-color: #555;
+  color: #fff;
+}
+
+/* === HEADER === */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.header h1 {
+  font-size: 22px;
+  margin: 0;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.top-controls {
+  display: flex;
+  gap: 6px;
+}
+
+.top-controls button {
+  padding: 6px 12px;
+  border: 2px solid #c8c8c8;
+  background: #e8e8e8;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.top-controls .active {
+  background: #000;
+  color: #00a6ff;
+  border-color: #000;
+}
+
+.dark-toggle {
+  background: #000;
+  color: #fff;
+}
+
+/* === TABS === */
+.tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.main-button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  background: #d6d6d6;
+  border: 2px solid #8c8c8c;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: "Inter", Arial, sans-serif;
+  font-weight: 600;
+  color: #111;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+}
+.main-button {
+  width: 100%;
+  justify-content: center;
+}
+.main-button:hover {
+  background: #c8c8c8;
+  border-color: #555;
+}
+
+.main-button.active {
+  background: #000;
+  color: #fff;
+  border-color: #000;
+}
+
+.main-button:active {
+  background: #bfbfbf;
+  border-color: #333;
+  transform: scale(0.97);
+}
+
+/* === MODE SWITCH === */
+.mode-switch {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.mode-switch button {
+  flex: 1;
+  padding: 10px;
+  background: #e8e8e8;
+  border: 2px solid #c8c8c8;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.mode-switch .active {
+  background: #000;
+  color: #fff;
+  border-color: #000;
+}
+
+/* === LABELS === */
+label {
+  display: block;
+  margin: 12px 0 6px;
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: -0.2px;
+}
+
+/* === GSM GRID === */
+.gsm-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 6px;
+  margin: 10px 0 15px;
+}
+
+/* === SIZE INPUTS === */
+.size-inputs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.size-inputs input {
+  flex: 1;
+}
+
+/* === SIZE GROUP TITLES === */
+.group-title {
+  font-size: 14px;
+  font-weight: 800;
+  margin: 4px 0 2px;
+  letter-spacing: -0.2px;
+}
+
+/* === SIZE GRID === */
+.size-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+/* === PRESET BUTTONS (GSM, SIZE, WEIGHT) === */
+.preset-button {
+  background: #7a7a7a;        /* πιο φωτεινό, ~50% μαύρο */
+  color: #111;
+  border: 2px solid #9c9c9c;  /* πιο φωτεινό industrial border */
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-family: "Inter", Arial, sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.preset-button:hover {
+  background: #6c6c6c;        /* hover λίγο πιο σκούρο */
+  border-color: #777;
+}
+
+.preset-button.active {
+  background: #000;           /* active = μαύρο */
+  color: #fff;
+  border-color: #000;
+}
+
+.preset-button:active {
+  background: #bfbfbf;        /* pressed state */
+  border-color: #555;
+}
+/* === SIZE BUTTON FIX FOR MOBILE === */
+.preset-button {
+  white-space: nowrap;
+  font-size: 14px;
+  letter-spacing: -0.3px;
+  min-width: 0;
+}
+
+/* ΜΟΝΟ στο κινητό */
+@media (max-width: 480px) {
+  .preset-button {
+    font-size: 12px;
+    padding: 8px 6px;
+    letter-spacing: -0.5px;
+  }
+
+  .size-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+  }
+}
+/* === WEIGHT GRID === */
+.weight-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin-top: 10px;
+}
+
+/* === RESULT BOX === */
+.result-box {
+  margin-top: 20px;
+  background: #d8fce6;
+  border: 2px solid #014120;
+  padding: 16px;
+  border-radius: 8px;
+  text-align: center;
+  color: #222;
+}
+
+.result-box .big {
+  font-size: 26px;
+  font-weight: 900;
+  margin-bottom: 6px;
+  letter-spacing: -0.4px;
+}
+
+.result-box .small {
+  font-size: 14px;
+  opacity: 0.85;
+}
+/* ------------------------------------------------------ */
+/* ACCORDION — Slide + Fade (Style 1, Multi-open)         */
+/* ------------------------------------------------------ */
+
+.accordion-content {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transform: translateY(-6px);
+  transition:
+    max-height 0.35s ease,
+    opacity 0.35s ease,
+    transform 0.35s ease;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+.accordion-content.open {
+  max-height: 900px; /* αρκετό για όλα τα inputs */
+  opacity: 1;
+  transform: translateY(0);
+  margin-top: 10px;
+}
+
+/* Optional: μικρή απόσταση από το κουμπί */
+.main-button + .accordion-content {
+  margin-bottom: 18px;
+}
