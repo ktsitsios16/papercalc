@@ -338,13 +338,19 @@ input {
 
 /* Μειώνουμε το κενό πάνω από τις επικεφαλίδες (Πρότυπες, A, B) */
 .size-group {
-  margin-top: -10px; /* από 12px → 4px */
-  margin-bottom: -10px; /* από 12px → 8px */
+  margin-top: -20px; /* από 12px → 4px */
+  margin-bottom: -20px; /* από 12px → 8px */
 }
 
 /* Μειώνουμε το κενό κάτω από τα κουμπιά “εκ” */
 .size-grid {
   margin-bottom: 18x; /* από 16px → 10px */
+}
+/* --- GRID FIX FOR A/B BUTTONS --- */
+.size-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+  gap: 8px;
 }
 /* ============================================
    PREMIUM LOOK FOR A/B SIZE BUTTONS
@@ -381,4 +387,53 @@ input {
 
 .preset-button.active .size-dims {
   opacity: 0.75;
+}
+/* --- GRID FIX: Desktop = 3 columns, Mobile = auto-fit --- */
+
+/* Desktop (default) */
+.size-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+/* Mobile override */
+@media (max-width: 480px) {
+  .size-grid {
+    grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+  }
+}
+/* --- MOBILE FIX: σωστό μέγεθος βασικών και υποκατηγοριών --- */
+@media (max-width: 480px) {
+  /* Βασικά κουμπιά — μεγαλύτερα */
+  .main-button {
+    min-height: 48px !important;
+    padding: 14px !important;
+    font-size: 16px !important;
+  }
+
+  /* Υποκατηγορίες — μικρότερα */
+  .sub-button {
+    min-height: 36px !important;
+    padding: 8px !important;
+    font-size: 14px !important;
+  }
+}/* --- MOBILE FIX: μικρότερος τίτλος + σωστό κενό --- */
+@media (max-width: 480px) {
+  .header h1 {
+    font-size: 24px !important;   /* 25% μικρότερο */
+    margin-bottom: 6px !important; /* δίνει ανάσα από τα κουμπιά γλώσσας */
+  }
+}
+html, body {
+  overflow-x: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}
+.accordion-content input {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }

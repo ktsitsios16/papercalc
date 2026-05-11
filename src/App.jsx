@@ -64,6 +64,7 @@ const calcPricePerKg = (priceSheet, gsm, w, h) => {
    MAIN APP
 ============================ */
 export default function App() {
+  const [activeSheetsPreset, setActiveSheetsPreset] = useState(null);
   const [lang, setLang] = useState("gr");
   const [theme, setTheme] = useState("system");
 
@@ -82,54 +83,61 @@ export default function App() {
   /* ============================
      TRANSLATIONS
   ============================ */
-  const t = {
-    gr: {
-      sheets: "Φύλλα",
-      price: "Κόστος",
-      weight: "Βάρος Χαρτιών (kg)",
-      gsm: "Γραμμάρια Χαρτιού (GSM)",
-      customGsm: "Βάρος Χαρτιού (GSM)",
-      size: "Διάσταση Χαρτιού (cm)",
-      width: "Μήκος (cm)",
-      height: "Ύψος (cm)",
-      priceKg: "Τιμή Κιλού €",
-      priceSheet: "Τιμή Φύλλου €",
-      sheetsResult: "φύλλα",
-      sheetWeightLabel: "Βάρος φύλλου",
-      perSheet: "€/φύλλο",
-      sizeGroups: { standard: "Πρότυπες Διαστάσεις", A: "A", B: "B" },
-      sub: {
-        fromWeight: "Ποσότητα Φύλλων",
-        fromSheets: "Βάρος Συσκευασίας",
-        kgToSheet: "Τιμή Φύλλου",
-        sheetToKg: "Τιμή Κιλού"
-      }
+const t = {
+  gr: {
+    sheets: "Φύλλα",
+    price: "Κόστος",
+    weight: "Βάρος Χαρτιών (kg)",
+    gsm: "Γραμμάρια Χαρτιού (GSM)",
+    customGsm: "Βάρος Χαρτιού (GSM)",
+    size: "Διάσταση Χαρτιού (cm)",
+    width: "Μήκος (cm)",
+    height: "Ύψος (cm)",
+    priceKg: "Τιμή Κιλού €",
+    priceSheet: "Τιμή Φύλλου €",
+    sheetsResult: "φύλλα",
+    sheetWeightLabel: "Βάρος φύλλου",
+    perSheet: "€/φύλλο",
+    sizeGroups: { standard: "Πρότυπες Διαστάσεις", A: "A", B: "B" },
+    sub: {
+      fromWeight: "Ποσότητα Φύλλων",
+      fromSheets: "Βάρος Συσκευασίας",
+      kgToSheet: "Τιμή Φύλλου",
+      sheetToKg: "Τιμή Κιλού"
     },
-    en: {
-      sheets: "Sheets",
-      price: "Price",
-      weight: "Weight (kg)",
-      gsm: "Paper GSM",
-      customGsm: "Paper GSM",
-      size: "Size (cm)",
-      width: "Width (cm)",
-      height: "Height (cm)",
-      priceKg: "Price per Kg €",
-      priceSheet: "Price per Sheet €",
-      sheetsResult: "sheets",
-      sheetWeightLabel: "Sheet weight",
-      perSheet: "€/sheet",
-      sizeGroups: { standard: "Standard Sizes", A: "A", B: "B" },
-      sub: {
-        fromWeight: "Sheets from Weight",
-        fromSheets: "Weight from Sheets",
-        kgToSheet: "Price per Sheet",
-        sheetToKg: "Price per Kg"
-      }
-    }
-  };
+    // 🔹 ΝΕΑ ΚΛΕΙΔΙΑ ΓΙΑ PLACEHOLDERS
+    weightKgPlaceholder: "Κιλά (Kg)",
+    sheetsPlaceholder: "Φύλλα"
+  },
+  en: {
+    sheets: "Sheets",
+    price: "Price",
+    weight: "Weight (kg)",
+    gsm: "Paper GSM",
+    customGsm: "Paper GSM",
+    size: "Size (cm)",
+    width: "Width (cm)",
+    height: "Height (cm)",
+    priceKg: "Price per Kg €",
+    priceSheet: "Price per Sheet €",
+    sheetsResult: "sheets",
+    sheetWeightLabel: "Sheet weight",
+    perSheet: "€/sheet",
+    sizeGroups: { standard: "Standard Sizes", A: "A", B: "B" },
+    sub: {
+      fromWeight: "Sheets from Weight",
+      fromSheets: "Weight from Sheets",
+      kgToSheet: "Price per Sheet",
+      sheetToKg: "Price per Kg"
+    },
+    // 🔹 ΝΕΑ ΚΛΕΙΔΙΑ ΓΙΑ PLACEHOLDERS
+    weightKgPlaceholder: "Weight (Kg)",
+    sheetsPlaceholder: "Sheets"
+  }
+};
 
-  const tr = t[lang];
+const tr = t[lang];
+
 
   /* ============================
      STATES
@@ -326,7 +334,7 @@ export default function App() {
                 <label>{tr.weight}</label>
                 <input
                   type="number"
-                  placeholder="0"
+                  placeholder={tr.weightKgPlaceholder}
                   value={weight === 0 ? "" : weight}
                   onChange={(e) => {
                     setWeight(Math.max(0, Number(e.target.value)));
@@ -422,86 +430,114 @@ export default function App() {
           </div>
 
           {/* ===== FROM SHEETS ===== */}
-          <div className={accordionClass(openSheetsMode === "fromSheets")}>
-            {openSheetsMode === "fromSheets" && (
-              <div className="accordion-inner">
-                {/* SHEET COUNT */}
-                <label>{lang === "gr" ? "Αριθμός Φύλλων" : "Number of Sheets"}</label>
-                <input
-                  type="number"
-                  placeholder="0"
-                  value={sheetCount === 0 ? "" : sheetCount}
-                  onChange={(e) => setSheetCount(Math.max(0, Number(e.target.value)))}
-                />
+<div className={accordionClass(openSheetsMode === "fromSheets")}>
+  {openSheetsMode === "fromSheets" && (
+    <div className="accordion-inner">
 
-                {/* GSM INPUT */}
-                <label>{tr.gsm}</label>
-                <input
-                  type="number"
-                  placeholder={tr.customGsm}
-                  value={customGsm}
-                  onChange={(e) => setCustomGsm(Math.max(0, Number(e.target.value)))}
-                />
+      {/* SHEET COUNT */}
+      <label>{lang === "gr" ? "Αριθμός Φύλλων" : "Number of Sheets"}</label>
+      <input
+        type="number"
+        placeholder={tr.sheetsPlaceholder}
+        value={sheetCount === 0 ? "" : sheetCount}
+        onChange={(e) => {
+          setSheetCount(Math.max(0, Number(e.target.value)));
+          setActiveSheetsPreset(null);
+        }}
+      />
 
-                {/* GSM PRESETS */}
-                <div className="gsm-grid">
-                  {GSM_OPTIONS.map((g) => (
-                    <button
-                      key={g}
-                      onClick={() => setCustomGsm(String(g))}
-                      className={activeGsm === g ? "preset-button active" : "preset-button"}
-                    >
-                      {g}
-                    </button>
-                  ))}
-                </div>
+      {/* SHEET PRESETS */}
+      <div className="size-grid">
+        {[100, 500, 1000, 2000, 2500, 3000].map((n) => (
+          <button
+            key={n}
+            onClick={() => {
+              setSheetCount(n);
+              setActiveSheetsPreset(n);
+            }}
+            className={activeSheetsPreset === n ? "preset-button active" : "preset-button"}
+          >
+            {n}
+          </button>
+        ))}
+      </div>
 
-                {/* SIZE INPUTS */}
-                <label>{tr.size}</label>
-                <div className="size-inputs">
-                  <input
-                    type="number"
-                    placeholder={tr.width}
-                    value={customSize.w}
-                    onChange={(e) =>
-                      setCustomSize({
-                        ...customSize,
-                        w: Math.max(0, Number(e.target.value))
-                      })
-                    }
-                  />
-                  <input
-                    type="number"
-                    placeholder={tr.height}
-                    value={customSize.h}
-                    onChange={(e) =>
-                      setCustomSize({
-                        ...customSize,
-                        h: Math.max(0, Number(e.target.value))
-                      })
-                    }
-                  />
-                </div>
+      {/* GSM INPUT */}
+      <label>{tr.gsm}</label>
+      <input
+        type="number"
+        placeholder={tr.customGsm}
+        value={customGsm}
+        onChange={(e) => {
+          setCustomGsm(Math.max(0, Number(e.target.value)));
+          setActiveSheetsPreset(null);
+        }}
+      />
 
-                {/* SIZE PRESETS */}
-                {renderSizeButtons("standard")}
-                {renderSizeButtons("A")}
-                {renderSizeButtons("B")}
+      {/* GSM PRESETS */}
+      <div className="gsm-grid">
+        {GSM_OPTIONS.map((g) => (
+          <button
+            key={g}
+            onClick={() => {
+              setCustomGsm(g);
+              setActiveSheetsPreset(null);
+            }}
+            className={activeGsm === g ? "preset-button active" : "preset-button"}
+          >
+            {g}
+          </button>
+        ))}
+      </div>
 
-                {/* RESULT */}
-                <div className="result-box">
-                  <div className="big">
-                    {totalWeightFromSheets < 1
-                      ? `${Math.round(totalWeightFromSheets * 1000)} g`
-                      : `${totalWeightFromSheets.toFixed(2)} kg`}
-                  </div>
-                  <div className="small">
-                    {tr.sheetWeightLabel}: {sheetWeight.toFixed(2)} g
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
+      {/* SIZE INPUTS */}
+      <label>{tr.size}</label>
+      <div className="size-inputs">
+        <input
+          type="number"
+          placeholder={tr.width}
+          value={customSize.w}
+          onChange={(e) =>
+            setCustomSize({
+              ...customSize,
+              w: Math.max(0, Number(e.target.value))
+            })
+          }
+        />
+        <input
+          type="number"
+          placeholder={tr.height}
+          value={customSize.h}
+          onChange={(e) =>
+            setCustomSize({
+              ...customSize,
+              h: Math.max(0, Number(e.target.value))
+            })
+          }
+        />
+      </div>
+
+      {/* SIZE PRESETS */}
+      {renderSizeButtons("standard")}
+      {renderSizeButtons("A")}
+      {renderSizeButtons("B")}
+
+      {/* RESULT */}
+      <div className="result-box">
+        <div className="big">
+          {totalWeightFromSheets < 1
+            ? `${Math.round(totalWeightFromSheets * 1000)} g`
+            : `${totalWeightFromSheets.toFixed(2)} kg`}
+        </div>
+        <div className="small">
+          {tr.sheetWeightLabel}: {sheetWeight.toFixed(2)} g
+        </div>
+      </div>
+
+    </div>
+  )}
+</div>
+
         </>
       )}
 
@@ -583,7 +619,7 @@ export default function App() {
                 {/* RESULT */}
                 <div className="result-box">
                   <div className="big">
-                    {priceSheet ? priceSheet.toFixed(4) + " " + tr.perSheet : "-"}
+                    {priceSheet ? priceSheet.toFixed(4) + " " + tr.perSheet : "0,00 €"}
                   </div>
                   <div className="small">
                     {tr.sheetWeightLabel}: {sheetWeight.toFixed(2)} g
@@ -666,7 +702,7 @@ export default function App() {
                 {/* RESULT */}
                 <div className="result-box">
                   <div className="big">
-                    {priceKg ? priceKg.toFixed(3) + " €/kg" : "-"}
+                    {priceKg ? priceKg.toFixed(3) + " €/kg" : "0,00 €/kg"}
                   </div>
                   <div className="small">
                     {tr.sheetWeightLabel}: {sheetWeight.toFixed(2)} g
