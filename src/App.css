@@ -1,4 +1,20 @@
 /* =======================================================
+   FONT IMPORTS
+======================================================= */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&display=swap');
+
+/* =======================================================
+   GLOBAL TYPOGRAPHY — Manrope for UI text
+======================================================= */
+body {
+  font-family: 'Manrope', sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.35;
+}
+
+/* =======================================================
    ROOT VARIABLES — THEMES
 ======================================================= */
 :root {
@@ -34,19 +50,16 @@
 }
 
 /* =======================================================
-   BODY & GENERAL LAYOUT
+   GENERAL LAYOUT
 ======================================================= */
 html, body {
   overflow-x: hidden;
-  font-family: "Inter", system-ui, sans-serif;
   color: var(--fg);
   background: var(--bg);
   box-sizing: border-box;
 }
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 .container {
   width: 100%;
@@ -54,19 +67,11 @@ html, body {
   margin: 0;
   padding: 16px;
   min-height: 100vh;
-  box-sizing: border-box;
-  color: var(--fg);
   background: var(--bg);
 }
 
-/* Tablet / Desktop Responsive */
 @media (min-width: 600px) {
-  .container {
-    padding: 24px;
-  }
-}
-@media (max-width: 480px) {
-  .container { padding: 16px; }
+  .container { padding: 24px; }
 }
 
 /* =======================================================
@@ -80,21 +85,31 @@ html, body {
 }
 
 .header h1 {
+  font-family: 'Inter', sans-serif;
   font-size: 32px;
   font-weight: 600;
   margin: 0;
-  padding: 0;
-  color: var(--fg);
 }
+
+/* =======================================================
+   OVERRIDES — HEADER TITLE COLORS
+======================================================= */
+
+/* Light Mode */
+.light .header h1 {
+  color: #111;
+}
+
+/* Dark Mode */
+.dark .header h1 {
+  color: #f5f5f5;
+}
+
 
 @media (max-width: 480px) {
-  .header h1 {
-    font-size: 24px;
-    margin-bottom: 6px;
-  }
+  .header h1 { font-size: 24px; margin-bottom: 6px; }
 }
 
-/* Top controls: theme & language */
 .top-controls {
   display: flex;
   flex-direction: column;
@@ -143,36 +158,21 @@ button.active {
   border-color: var(--button-active);
 }
 
-button:active {
-  transform: scale(0.97);
-}
+button:active { transform: scale(0.97); }
 
-/* Specific button types */
 .main-button,
 .preset-button,
 .sub-button {
   display: flex;
   align-items: center;
   justify-content: center;
-  text-align: center;
 }
 
-/* Subcategory Buttons */
 .sub-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 8px;
   margin-bottom: 16px;
-}
-
-/* Premium size button content */
-.preset-button .size-label {
-  font-weight: 700;
-}
-.preset-button .size-dims {
-  opacity: 0.55;
-  font-size: 13px;
-  margin-left: 2px;
 }
 
 /* =======================================================
@@ -192,52 +192,31 @@ input {
   transition: border-color 0.15s ease;
 }
 
-input:focus {
-  border-color: var(--accent);
-}
+input:focus { border-color: var(--accent); }
 
 /* =======================================================
-   GRIDS (GSM, SIZE, WEIGHT)
+   UNIFIED GRIDS
 ======================================================= */
+.preset-buttons,
+.size-grid,
 .gsm-grid,
 .weight-grid,
-.size-grid {
+.sheet-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 8px;
-  margin-bottom: 16px;
-}
-
-@media (max-width: 480px) {
-  .size-grid {
-    grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
-  }
+  margin-top: 10px;
 }
 
 /* =======================================================
-   SIZE GROUP & INPUTS
+   SIZE INPUTS
 ======================================================= */
-.size-group {
-  margin-top: -20px;
-  margin-bottom: -0px;
-}
-
-.size-group h4 {
-  font-size: 16px;
-  font-weight: 600;
-  opacity: 0.85;
-  margin-bottom: 6px;
-}
-
 .size-inputs {
   display: flex;
-  gap: 10px;
-  margin-bottom: 0px;
+  gap: 8px;
 }
 
-.size-inputs input {
-  flex: 1;
-}
+.size-inputs input { width: 100%; }
 
 /* =======================================================
    ACCORDION
@@ -267,60 +246,148 @@ input:focus {
 }
 
 .accordion-inner {
-  padding: 0px;
+  padding: 0;
   display: flex;
   flex-direction: column;
   gap: 14px;
   width: 100%;
-  transform: translateX(-0%);
 }
 
+
 /* =======================================================
-   CATEGORY BLOCK & PANELS
+   CATEGORY PANELS
 ======================================================= */
 .category-panel {
   background: var(--panel-bg);
   border: 1px solid var(--panel-border);
-  border-radius: 12px;
-  padding: 18px;
-  margin-bottom: 22px;
-  box-shadow: var(--panel-shadow);
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 15px;
 }
 
-/* PANEL FOR COST TAB (same style as category-panel) */
+/* CATEGORY HEADINGS — Inter */
+.category-panel > label {
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: 0.2px;
+  margin-bottom: 10px;
+  opacity: 0.95;
+}
+
+/* Subheadings inside panels */
+.category-panel h4 {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.25;
+  margin: 6px 0;
+  opacity: 0.85;
+}
+
+/* Panels for ALL categories */
+.category-panel {
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 15px;
+}
+
+
+
+/* Cost tab panel */
 .price-panel {
   background: var(--panel-bg);
   border: 1px solid var(--panel-border);
-  border-radius: 12px;
-  padding: 18px;
-  margin-bottom: 22px;
-  box-shadow: var(--panel-shadow);
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 15px;
 }
 
 .input-row {
-  background: var(--panel-bg);
-  border: 1px solid var(--panel-border);
-  border-radius: 10px;
-  padding: 14px;
-  box-shadow: var(--panel-shadow);
-  margin-bottom: 16px;
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .input-row label {
-  font-weight: 600;
+  font-family: 'Manrope', sans-serif;
   font-size: 14px;
+  font-weight: 600;
+  line-height: 1.3;
 }
 
-.input-row input {
-  border: 1px solid var(--input-border);
-  background: var(--input-bg);
-  color: var(--fg);
+/* =======================================================
+   ACTIVE CATEGORY HIGHLIGHT
+======================================================= */
+
+.active-panel {
+  border-color: var(--accent);
+  background: rgba(0, 120, 255, 0.06);
+  box-shadow: 0 0 0 2px rgba(0, 120, 255, 0.15);
+  transition: all 0.25s ease;
+}
+
+/* Dark Mode */
+.dark .active-panel {
+  border-color: var(--accent);
+  background: rgba(10, 132, 255, 0.12);
+  box-shadow: 0 0 0 2px rgba(10, 132, 255, 0.25);
+}
+
+/* =======================================================
+   AUTO HIGHLIGHT PER CATEGORY — PREMIUM TINTS
+======================================================= */
+
+/* ΠΟΣΟΤΗΤΑ ΦΥΛΛΩΝ (ΜΠΛΕ) */
+.active-panel-sheets {
+  background: rgba(0, 120, 255, 0.06);
+  border-color: rgba(0, 120, 255, 0.35);
+  box-shadow: 0 0 0 2px rgba(0, 120, 255, 0.20);
+}
+.dark .active-panel-sheets {
+  background: rgba(10, 132, 255, 0.12);
+  border-color: rgba(10, 132, 255, 0.45);
+  box-shadow: 0 0 0 2px rgba(10, 132, 255, 0.30);
+}
+
+/* ΒΑΡΟΣ ΣΥΣΚΕΥΑΣΙΑΣ (ΠΡΑΣΙΝΟ) */
+.active-panel-package {
+  background: rgba(0, 180, 90, 0.06);
+  border-color: rgba(0, 180, 90, 0.35);
+  box-shadow: 0 0 0 2px rgba(0, 180, 90, 0.20);
+}
+.dark .active-panel-package {
+  background: rgba(0, 200, 110, 0.12);
+  border-color: rgba(0, 200, 110, 0.45);
+  box-shadow: 0 0 0 2px rgba(0, 200, 110, 0.30);
+}
+
+/* ΤΙΜΗ ΦΥΛΛΟΥ (ΠΟΡΤΟΚΑΛΙ) */
+.active-panel-price-sheet {
+  background: rgba(255, 150, 0, 0.06);
+  border-color: rgba(255, 150, 0, 0.35);
+  box-shadow: 0 0 0 2px rgba(255, 150, 0, 0.20);
+}
+.dark .active-panel-price-sheet {
+  background: rgba(255, 170, 40, 0.12);
+  border-color: rgba(255, 170, 40, 0.45);
+  box-shadow: 0 0 0 2px rgba(255, 170, 40, 0.30);
+}
+
+/* ΤΙΜΗ ΚΙΛΟΥ (ΜΩΒ) */
+.active-panel-price-kg {
+  background: rgba(150, 80, 255, 0.06);
+  border-color: rgba(150, 80, 255, 0.35);
+  box-shadow: 0 0 0 2px rgba(150, 80, 255, 0.20);
+}
+.dark .active-panel-price-kg {
+  background: rgba(170, 110, 255, 0.12);
+  border-color: rgba(170, 110, 255, 0.45);
+  box-shadow: 0 0 0 2px rgba(170, 110, 255, 0.30);
 }
 
 /* =======================================================
@@ -348,7 +415,6 @@ input:focus {
   opacity: 0.75;
 }
 
-/* Dark adjustments */
 .dark .result-box {
   background: #1e1e1e;
   border-color: #333;
@@ -356,21 +422,224 @@ input:focus {
 }
 
 /* =======================================================
-   RESPONSIVE — MOBILE BUTTON SIZES
+   RESULT BOX HIGHLIGHT PER CATEGORY
+======================================================= */
+
+/* ΠΟΣΟΤΗΤΑ ΦΥΛΛΩΝ (ΜΠΛΕ) */
+.result-box-sheets {
+  background: rgba(0, 120, 255, 0.06);
+  border: 1px solid rgba(0, 120, 255, 0.35);
+  box-shadow: 0 0 0 2px rgba(0, 120, 255, 0.20);
+}
+
+/* ΒΑΡΟΣ ΣΥΣΚΕΥΑΣΙΑΣ (ΠΡΑΣΙΝΟ) */
+.result-box-package {
+  background: rgba(0, 180, 90, 0.06);
+  border: 1px solid rgba(0, 180, 90, 0.35);
+  box-shadow: 0 0 0 2px rgba(0, 180, 90, 0.20);
+}
+
+/* ΤΙΜΗ ΦΥΛΛΟΥ (ΠΟΡΤΟΚΑΛΙ) */
+.result-box-price-sheet {
+  background: rgba(255, 150, 0, 0.06);
+  border: 1px solid rgba(255, 150, 0, 0.35);
+  box-shadow: 0 0 0 2px rgba(255, 150, 0, 0.20);
+}
+
+/* ΤΙΜΗ ΚΙΛΟΥ (ΜΩΒ) */
+.result-box-price-kg {
+  background: rgba(150, 80, 255, 0.06);
+  border: 1px solid rgba(150, 80, 255, 0.35);
+  box-shadow: 0 0 0 2px rgba(150, 80, 255, 0.20);
+}
+
+/* =======================================================
+   PREMIUM DARK MODE HEADINGS
+======================================================= */
+
+/* Κύριες επικεφαλίδες (labels, τίτλοι panels) */
+.dark .category-panel label,
+.dark .category-panel h4,
+.dark .size-main {
+  color: #ffffff; /* καθαρό premium λευκό */
+}
+
+/* Δευτερεύον κείμενο (sub-labels, μικρές λεπτομέρειες) */
+.dark .size-sub,
+.dark .result-box .small {
+  color: #dcdcdc; /* απαλό premium γκρι */
+}
+
+/* Ενίσχυση contrast στα inputs */
+.dark .input-row input {
+  color: #ffffff;
+}
+
+/* Ενίσχυση contrast στα preset buttons όταν είναι active */
+.dark .preset-button.active {
+  color: #ffffff;
+}
+
+/* =======================================================
+   PREMIUM DARK MODE BORDERS
+======================================================= */
+
+.dark .category-panel {
+  border-color: #4a4a4a; /* premium soft grey */
+}
+
+.dark .result-box {
+  border-color: #4a4a4a; /* ίδιο premium border */
+}
+
+.dark .input-row input {
+  border-color: #555; /* λίγο πιο καθαρό από το #333 */
+}
+
+.dark .preset-button {
+  border-color: #444; /* διακριτικό, premium */
+}
+
+.dark .preset-button.active {
+  border-color: #888; /* πιο φωτεινό για active state */
+}
+
+/* =======================================================
+   PREMIUM DARK MODE SHADOWS
+======================================================= */
+
+.dark .category-panel {
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+}
+
+.dark .result-box {
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+}
+
+.dark .input-row input {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.dark .preset-button {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+.dark .preset-button.active {
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.15),
+              0 2px 8px rgba(0, 0, 0, 0.35);
+}
+
+/* =======================================================
+   PREMIUM DARK MODE HOVER EFFECTS
+======================================================= */
+
+/* Panels hover */
+.dark .category-panel:hover {
+  border-color: #5a5a5a;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+  transition: 0.18s ease;
+}
+
+/* Result box hover */
+.dark .result-box:hover {
+  border-color: #5a5a5a;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+  transition: 0.18s ease;
+}
+
+/* Inputs hover */
+.dark .input-row input:hover {
+  border-color: #777;
+  box-shadow: 0 0 0 2px rgba(255,255,255,0.08);
+  transition: 0.15s ease;
+}
+
+/* Preset buttons hover */
+.dark .preset-button:hover {
+  background: #2a2a2a;
+  border-color: #666;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.35);
+  transition: 0.15s ease;
+}
+
+/* Active preset buttons hover */
+.dark .preset-button.active:hover {
+  background: #333;
+  border-color: #aaa;
+  box-shadow: 0 0 0 2px rgba(255,255,255,0.18),
+              0 3px 10px rgba(0,0,0,0.45);
+  transition: 0.15s ease;
+}
+
+
+
+/* =======================================================
+   RESPONSIVE
 ======================================================= */
 @media (max-width: 480px) {
-  .main-button {
-    min-height: 48px;
-    font-size: 16px;
-  }
-  .sub-button {
-    min-height: 36px;
-    font-size: 14px;
-  }
+  .main-button { min-height: 48px; font-size: 16px; }
+  .sub-button { min-height: 36px; font-size: 14px; }
 }
-.preset-buttons {
+
+/* SIZE ROW FIXES */
+.input-row.size-inputs {
+  display: flex;
+  flex-direction: row !important;
+  gap: 8px;
+}
+
+.size-row {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 8px;
-  margin-top: 10px;
+  margin-bottom: 16px;
+}
+
+@media (max-width: 480px) {
+  .size-row { grid-template-columns: repeat(3, 1fr); }
+}
+
+.category-panel .size-row {
+  margin-bottom: 10px;
+}
+
+.size-row .preset-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  white-space: normal;
+  text-align: center;
+  line-height: 1.15;
+  padding: 8px 4px;
+}
+
+.size-row .preset-button .size-main {
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.size-row .preset-button .size-sub {
+  font-size: 11px;
+  opacity: 0.55;
+}
+
+@media (max-width: 480px) {
+  .size-row .preset-button {
+    padding: 6px 2px;
+  }
+}
+
+/* =======================================================
+   PREMIUM GROUPING — ΜΟΝΟ για Φύλλα
+======================================================= */
+
+.sheets-content.open {
+  border: 1px solid var(--panel-border);
+  border-radius: 14px;
+  padding: 20px 18px;
+  background: var(--panel-bg);
+  box-shadow: 0 6px 22px rgba(0,0,0,0.35);
+  margin-top: 14px;
+  margin-bottom: 18px;
 }
