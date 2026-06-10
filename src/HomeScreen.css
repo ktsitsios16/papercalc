@@ -151,7 +151,7 @@
   overflow: hidden;
   transition: transform 0.15s ease;
   z-index: 30;
-  border: 2px solid red;  /* ΤΕΣΤ ΓΙΑ ΤΑ ΠΛΑΙΣΙΑ ΣΤΑ ΚΟΥΜΠΙΑ ΠΟΥ ΠΑΤΙΟΥΝΤΑΙ */
+  /* ΤΕΣΤ ΓΙΑ ΤΑ ΠΛΑΙΣΙΑ ΣΤΑ ΚΟΥΜΠΙΑ ΠΟΥ ΠΑΤΙΟΥΝΤΑΙ  border: 2px solid red;  */
 }
 
 .icon-btn:hover,
