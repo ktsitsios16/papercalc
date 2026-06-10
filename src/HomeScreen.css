@@ -1,0 +1,346 @@
+.home-screen {
+  width: 100vw;
+  height: 100dvh;
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  background-image: url("/backgrounds/offset-image-1.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  padding: env(safe-area-inset-top) 20px env(safe-area-inset-bottom);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-sizing: border-box;
+}
+.top-icons {
+  position: relative;
+  width: 100%;
+  height: 120px;
+}
+
+.icon-home,
+.icon-theme,
+.icon-lang-el,
+.icon-lang-en {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.25);
+  border-radius: 8px;
+  backdrop-filter: blur(4px);
+  pointer-events: auto !important;
+  color: white;
+  padding: 0;
+  z-index: 999999 !important;
+}
+
+.icon-home { top: 10px; left: -10px; width: 40px; height: 40px; }
+.icon-theme { top: 10px; right: -10px; width: 40px; height: 40px; }
+
+.icon-lang-el { top: 65px; right: 40px; }
+.icon-lang-en { top: 65px; right: -10px; }
+
+.icon-lang-el.active,
+.icon-lang-en.active {
+  background: #3b82f6;
+  color: white;
+}
+
+.icon-title {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  font-weight: 700;
+  color: white;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+}
+.section {
+  margin-top: 80px;
+  width: 100%;
+}
+
+.category-block {
+  position: relative;
+  width: 350px;
+  height: 400px;
+  margin: 0 auto;
+}
+.block-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  z-index: 1;
+}
+.block-title-sheets,
+.block-title-cost {
+  position: absolute;
+  width: 150px;
+  text-align: center;
+  white-space: normal;
+  line-height: 1.0;
+  font-size: 22px;
+  font-weight: 870;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* ΡΥΘΜΙΣΕ ΤΑ ΕΔΩ */
+.block-title-sheets {
+  top: var(--sheets-title-top);
+  left: var(--sheets-title-left);
+  transform: translateX(-50%);
+  color: rgb(0, 30, 2);
+  text-shadow: 0 2px 4px rgba(30, 30, 30, 0.6);
+}
+
+.block-title-cost {
+  top: var(--cost-title-top);
+  left: var(--cost-title-left);
+  transform: translateX(-50%);
+  color: rgb(30, 0, 0);
+  text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+}
+.grid-sheets,
+.grid-cost {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 14;
+  z-index: 20;
+}
+
+/* ΡΥΘΜΙΣΕ ΤΑ ΕΔΩ */
+.grid-sheets { 
+  top: 39%;
+  left: 13%;
+}
+.grid-cost   { 
+  top: 40%;
+  right: 10%;
+}
+
+.icon-btn {
+  position: relative;
+  width: var(--sheets-btn-width);
+  height: var(--sheets-btn-height);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  margin: var(--sheets-btn-gap) 0;
+  padding: 0;
+  overflow: hidden;
+  transition: transform 0.15s ease;
+  z-index: 30;
+  border: 2px solid red;  /* ΤΕΣΤ ΓΙΑ ΤΑ ΠΛΑΙΣΙΑ ΣΤΑ ΚΟΥΜΠΙΑ ΠΟΥ ΠΑΤΙΟΥΝΤΑΙ */
+}
+
+.icon-btn:hover,
+.icon-btn:active {
+  transform: none;
+}
+
+.icon-btn img {
+  width: 140px;
+  height: 50px;
+  object-fit: contain;
+}
+.btn-title {
+  position: absolute;
+  transform: translateX(-50%);
+  width: 75px;
+  font-size: 14px;
+  font-weight: 800;
+  color: rgb(0, 0, 0);
+  text-align: center;
+  line-height: 0.9;
+  pointer-events: none;
+  z-index: auto; /* ΔΕΝ εμποδίζει τα κουμπιά */
+}
+
+.category-block:nth-of-type(2) .icon-btn {
+  width: var(--cost-btn-width);
+  height: var(--cost-btn-height);
+  margin: var(--cost-btn-gap) 0;
+}
+
+
+/* SHEETS BLOCK */
+.category-block.sheets-block {
+  position: relative;
+  width: var(--sheets-frame-width);
+  height: var(--sheets-frame-height);
+  top: var(--sheets-frame-top);
+  left: var(--sheets-frame-left);
+}
+
+/* COST BLOCK */
+.category-block.cost-block {
+  position: relative;
+  width: var(--cost-frame-width);
+  height: var(--cost-frame-height);
+  top: var(--cost-frame-top);
+  right: var(--cost-frame-right);
+}
+
+/* ===== LIGHT MODE ===== */
+.home-screen.light {
+  filter: brightness(1) contrast(1);
+}
+
+/* ===== DARK MODE ===== */
+.home-screen.dark {
+  filter: brightness(var(--dark-brightness)) contrast(var(--dark-contrast));
+  position: relative;
+}
+
+.home-screen.dark::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,var(--dark-overlay-opacity));
+  pointer-events: none;
+  z-index: 0;
+}
+
+.home-screen.dark .icon-btn {
+  filter: brightness(var(--dark-button-brightness));
+}
+
+.home-screen.dark .block-title-sheets,
+.home-screen.dark .block-title-cost,
+.home-screen.dark .btn-title {
+  filter: brightness(var(--dark-title-brightness));
+}
+
+.home-screen.dark .block-bg {
+  filter: brightness(1.2);
+}
+
+.grid-cost .icon-btn:nth-child(1) .btn-title {
+  top: var(--cost-title1-top);
+  left: var(--cost-title1-left);
+}
+
+.grid-cost .icon-btn:nth-child(2) .btn-title {
+  top: var(--cost-title2-top);
+  left: var(--cost-title2-left);
+  width: 60px;
+}
+
+.grid-sheets .icon-btn:nth-of-type(1) .btn-title {
+  top: 25%;
+  left: 60%;
+}
+
+.grid-sheets .icon-btn:nth-of-type(2) .btn-title {
+  top: 30%;
+  left: 60%;
+  font-size: 13px;
+}
+
+.grid-sheets .icon-btn:nth-of-type(3) .btn-title {
+  top: 30%;
+  left: 61%;
+}
+
+:root {
+  /* ====== SHEETS BLOCK ====== */
+  --sheets-title-top: 70px;
+  --sheets-title-left: 37%;
+
+  --sheets-grid-top: -4px;
+  --sheets-grid-left: -3px;
+
+  --sheets-btn-width: 170px;
+  --sheets-btn-height: 55px;
+  --sheets-btn-gap: -1px;
+
+  /* ====== COST BLOCK ====== */
+  --cost-title-top: 95px;
+  --cost-title-left: 62%;
+
+  --cost-grid-top: 0px;
+  --cost-grid-right: 5px;
+
+  --cost-btn-width: 180px;
+  --cost-btn-height: 55px;
+  --cost-btn-gap: 10px;
+
+  /* ===== SHEETS BUTTON FRAMES ===== */
+  --sheets-frame1-top: 165px;
+  --sheets-frame1-left: 45px;
+
+  --sheets-frame2-top: 215px;
+  --sheets-frame2-left: 45px;
+
+  --sheets-frame3-top: 265px;
+  --sheets-frame3-left: 45px;
+
+  /* ===== COST BUTTON FRAMES ===== */
+  --cost-frame1-top: 205px;
+  --cost-frame1-right: 40px;
+
+  --cost-frame2-top: 277px;
+  --cost-frame2-right: 40px;
+
+   /* ===== SHEETS PNG FRAME ===== */
+  --sheets-frame-top: -30px;
+  --sheets-frame-left: -70px;
+  --sheets-frame-width: 380px;
+  --sheets-frame-height: 400px;
+
+  /* ===== COST PNG FRAME ===== */
+  --cost-frame-top: -180px;
+  --cost-frame-right: -10px;
+  --cost-frame-width: 380px;
+  --cost-frame-height: 450px;
+
+  /* ===== SHEETS BUTTON TITLES ===== */
+  --sheets-title1-top: 55px;
+  --sheets-title1-left: 62%;
+
+  --sheets-title2-top: 2px;
+  --sheets-title2-left: 62%;
+
+  --sheets-title3-top: 2px;
+  --sheets-title3-left: 62%;
+
+  /* ===== COST BUTTON TITLES ===== */
+  --cost-title1-top: 15px;
+  --cost-title1-left: 38%;
+  
+  --cost-title2-top:15px;
+  --cost-title2-left: 38%;
+
+
+  
+  /* ===== DARK MODE MASTER CONTROL ===== */
+  --dark-brightness: 0.55;       /* πόσο σκοτεινή γίνεται η οθόνη */
+  --dark-overlay-opacity: 0.35;  /* ένταση overlay */
+  --dark-button-brightness: 1;/* πόσο σκοτεινά γίνονται τα κουμπιά */
+  --dark-title-brightness: 1.0;  /* φωτεινότητα τίτλων */
+  --dark-contrast: 1.0;          
+
+  
+  }
+
