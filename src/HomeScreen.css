@@ -71,7 +71,7 @@
 }
 .section {
   margin-top: 80px;
-  width: 100%;
+  width: 110%;
   position: relative;   /* ⭐ ΑΥΤΟ ΛΥΝΕΙ ΤΟ ΠΡΟΒΛΗΜΑ */
 }
 
@@ -135,7 +135,7 @@
 }
 .grid-cost   { 
   top: 40%;
-  right: 0%;
+  right: 10%;
 }
 
 .icon-btn {
