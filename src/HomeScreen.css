@@ -72,6 +72,7 @@
 .section {
   margin-top: 80px;
   width: 100%;
+  position: relative;   /* ⭐ ΑΥΤΟ ΛΥΝΕΙ ΤΟ ΠΡΟΒΛΗΜΑ */
 }
 
 .category-block {
