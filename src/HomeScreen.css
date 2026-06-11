@@ -70,9 +70,9 @@
   text-shadow: 0 2px 4px rgba(0,0,0,0.6);
 }
 .section {
+  position: relative;
+  width: 100%;
   margin-top: 80px;
-  width: 107%;
-  position: relative;   /* ⭐ ΑΥΤΟ ΛΥΝΕΙ ΤΟ ΠΡΟΒΛΗΜΑ */
 }
 
 .category-block {
