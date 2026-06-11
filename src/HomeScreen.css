@@ -71,7 +71,7 @@
 }
 .section {
   margin-top: 80px;
-  width: 110%;
+  width: 105%;
   position: relative;   /* ⭐ ΑΥΤΟ ΛΥΝΕΙ ΤΟ ΠΡΟΒΛΗΜΑ */
 }
 
