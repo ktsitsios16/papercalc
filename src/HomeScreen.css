@@ -196,11 +196,9 @@
 
 /* COST BLOCK */
 .category-block.cost-block {
-  position: relative;
-  width: var(--cost-frame-width);
-  height: var(--cost-frame-height);
-  top: var(--cost-frame-top);
-  right: var(--cost-frame-right);
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 /* ===== LIGHT MODE ===== */
