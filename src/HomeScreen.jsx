@@ -1,6 +1,5 @@
 import { useState } from "react";
 import "./HomeScreen.css";
-
 export default function HomeScreen({ onSelect, onStartMode, setOpenSheetsMode, setScreen }) {
 
 
