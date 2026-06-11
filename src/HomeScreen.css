@@ -195,7 +195,7 @@
 }
 
 /* COST BLOCK */
-.category-block.cost-block {
+..category-block.cost-block {
   position: absolute;
   top: 0;
   right: 0;
