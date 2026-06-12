@@ -74,7 +74,15 @@
   position: relative;
   width: 100%;
   margin-top: 80px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  padding: 0 20px; /* μικρό περιθώριο δεξιά-αριστερά */
+  box-sizing: border-box;
 }
+
 
 .category-block {
   position: relative;
@@ -192,9 +200,6 @@
   width: var(--cost-frame-width);
   height: var(--cost-frame-height);
   top: var(--cost-frame-top);
-
-  left: 50%;
-  transform: translateX(35%); /* ΡΥΘΜΙΖΕΙ ΠΟΣΟ ΔΕΞΙΑ ΠΑΕΙ */
 }
 
 /* COST BLOCK */
