@@ -1,5 +1,4 @@
 
-
 .home-screen {
   width: 100vw;
   height: 100dvh;
@@ -188,12 +187,14 @@
 
 
 /* SHEETS BLOCK */
-.category-block.sheets-block {
+.category-block.cost-block {
   position: relative;
-  width: var(--sheets-frame-width);
-  height: var(--sheets-frame-height);
-  top: var(--sheets-frame-top);
-  left: var(--sheets-frame-left);
+  width: var(--cost-frame-width);
+  height: var(--cost-frame-height);
+  top: var(--cost-frame-top);
+
+  left: 50%;
+  transform: translateX(35%); /* ΡΥΘΜΙΖΕΙ ΠΟΣΟ ΔΕΞΙΑ ΠΑΕΙ */
 }
 
 /* COST BLOCK */
