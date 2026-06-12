@@ -1,7 +1,4 @@
-/* TEST */
-.home-screen {
-  border: 5px solid red !important;
-}
+
 
 .home-screen {
   width: 100vw;
@@ -201,9 +198,11 @@
 
 /* COST BLOCK */
 .category-block.cost-block {
-  position: absolute;
-  top: 0;
-  right: 0;
+  position: relative;
+  width: var(--cost-frame-width);
+  height: var(--cost-frame-height);
+  top: var(--cost-frame-top);
+  right: var(--cost-frame-right);
 }
 
 /* ===== LIGHT MODE ===== */
@@ -348,6 +347,3 @@
   
   }
 
-.home-screen {
-  outline: 5px solid red;
-}
