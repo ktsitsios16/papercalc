@@ -83,7 +83,6 @@
   box-sizing: border-box;
 }
 
-
 .category-block {
   position: relative;
   width: 350px;
@@ -195,11 +194,12 @@
 
 
 /* SHEETS BLOCK */
-.category-block.cost-block {
+.category-block.sheets-block {
   position: relative;
-  width: var(--cost-frame-width);
-  height: var(--cost-frame-height);
-  top: var(--cost-frame-top);
+  width: var(--sheets-frame-width);
+  height: var(--sheets-frame-height);
+  top: var(--sheets-frame-top);
+  left: var(--sheets-frame-left);
 }
 
 /* COST BLOCK */
@@ -208,7 +208,6 @@
   width: var(--cost-frame-width);
   height: var(--cost-frame-height);
   top: var(--cost-frame-top);
-  right: var(--cost-frame-right);
 }
 
 /* ===== LIGHT MODE ===== */
