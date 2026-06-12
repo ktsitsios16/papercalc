@@ -74,20 +74,14 @@
   position: relative;
   width: 100%;
   margin-top: 80px;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-
-  padding: 0 20px; /* μικρό περιθώριο δεξιά-αριστερά */
-  box-sizing: border-box;
+  height: 800px; /* ΠΡΟΣΘΕΤΟ — για να χωράνε τα 2 blocks */
 }
 
 .category-block {
   position: relative;
   width: 350px;
   height: 400px;
-  margin: 0 auto;
+  margin: 10px 0;
 }
 .block-bg {
   position: absolute;
@@ -199,16 +193,16 @@
   width: var(--sheets-frame-width);
   height: var(--sheets-frame-height);
   top: var(--sheets-frame-top);
-  left: var(--sheets-frame-left);
+ right: 80px; /* πάει αριστερά */
 }
 
 /* COST BLOCK */
 .category-block.cost-block {
-  position: absolute;
-  top: var(--cost-frame-top);
-  right: var(--cost-frame-right);
+  position: relative;
   width: var(--cost-frame-width);
   height: var(--cost-frame-height);
+  top: var(--cost-frame-top);
+ left: 40px; /* πάει δεξιά */
 }
 
 /* ===== LIGHT MODE ===== */
@@ -285,7 +279,7 @@
   --sheets-btn-gap: -1px;
 
   /* ====== COST BLOCK ====== */
-  --cost-title-top: 95px;
+  --cost-title-top: 89px;
   --cost-title-left: 62%;
 
   --cost-grid-top: 0px;
