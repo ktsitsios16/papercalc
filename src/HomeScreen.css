@@ -202,7 +202,7 @@
   width: var(--cost-frame-width);
   height: var(--cost-frame-height);
   top: var(--cost-frame-top);
- left: 40px; /* πάει δεξιά */
+  right: var(--cost-frame-right);
 }
 
 /* ===== LIGHT MODE ===== */
@@ -316,7 +316,7 @@
   --cost-frame-top: -180px;
   --cost-frame-width: 350px;
 --cost-frame-height: 420px;
---cost-frame-right: -25px;
+--cost-frame-right: -40px;
 
   /* ===== SHEETS BUTTON TITLES ===== */
   --sheets-title1-top: 55px;
