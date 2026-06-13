@@ -70,24 +70,18 @@
   color: white;
   text-shadow: 0 2px 4px rgba(0,0,0,0.6);
 }
-.section {
-  position: relative;
-  width: 100%;
-  margin-top: 80px;
-  height: 800px; /* ΠΡΟΣΘΕΤΟ — για να χωράνε τα 2 blocks */
-}
 
 .category-block {
   position: relative;
   width: 350px;
   height: 400px;
-  margin: 10px 0;
+  margin: 100px 00;
 }
 .block-bg {
-  position: absolute;
+  position: relative;
   inset: 0;
-  width: 100%;
-  height: 100%;
+  width: 92%;
+  height: 92%;
   object-fit: contain;
   pointer-events: none;
   z-index: 1;
@@ -95,7 +89,7 @@
 .block-title-sheets,
 .block-title-cost {
   position: absolute;
-  width: 150px;
+  width: 60%;
   text-align: center;
   white-space: normal;
   line-height: 1.0;
@@ -126,7 +120,7 @@
   position: absolute;
   display: flex;
   flex-direction: column;
- gap: 0px;
+  gap: 0px;
   z-index: 20;
 }
 
@@ -163,8 +157,8 @@
 }
 
 .icon-btn img {
-  width: 140px;
-  height: 50px;
+  width: 90%;
+  height: 90%;
   object-fit: contain;
 }
 .btn-title {
@@ -180,10 +174,20 @@
   z-index: auto; /* ΔΕΝ εμποδίζει τα κουμπιά */
 }
 
+.category-block:nth-of-type(1) .icon-btn {
+  width: var(--sheets-btn-width);
+  height: var(--sheets-btn-height);
+  margin: var(--sheets-btn-gap) 0;
+  top: var(--sheets-btn-top);
+  left: var(--sheets-btn-left);
+}
+
 .category-block:nth-of-type(2) .icon-btn {
   width: var(--cost-btn-width);
   height: var(--cost-btn-height);
   margin: var(--cost-btn-gap) 0;
+  top: var(--cost-btn-top);
+  right: var(--cost-btn-right);
 }
 
 
@@ -193,7 +197,7 @@
   width: var(--sheets-frame-width);
   height: var(--sheets-frame-height);
   top: var(--sheets-frame-top);
- right: 80px; /* πάει αριστερά */
+  left: var(--sheets-frame-left); /* πάει αριστερά */
 }
 
 /* COST BLOCK */
@@ -251,43 +255,48 @@
 }
 
 .grid-sheets .icon-btn:nth-of-type(1) .btn-title {
-  top: 25%;
-  left: 60%;
+  top: var(--sheets-title1-top);
+  left: var(--sheets-title1-left);
 }
 
 .grid-sheets .icon-btn:nth-of-type(2) .btn-title {
-  top: 30%;
-  left: 60%;
+  top: var(--sheets-title2-top);
+  left: var(--sheets-title2-left);
   font-size: 13px;
 }
 
 .grid-sheets .icon-btn:nth-of-type(3) .btn-title {
-  top: 30%;
-  left: 61%;
+  top: var(--sheets-title3-top);
+  left: var(--sheets-title3-left);;
 }
 
 :root {
   /* ====== SHEETS BLOCK ====== */
-  --sheets-title-top: 70px;
-  --sheets-title-left: 37%;
+  --sheets-title-top: 31%;
+  --sheets-title-left: 40%;
 
   --sheets-grid-top: -4px;
   --sheets-grid-left: -3px;
 
-  --sheets-btn-width: 170px;
-  --sheets-btn-height: 55px;
-  --sheets-btn-gap: -1px;
+  --sheets-btn-width: 55%;
+  --sheets-btn-height: 55%;
+  --sheets-btn-gap: 2px;
+  --sheets-btn-top: 20px;
+  --sheets-btn-left: -2%;
 
   /* ====== COST BLOCK ====== */
-  --cost-title-top: 89px;
+  --cost-title-top: 31%;
   --cost-title-left: 62%;
 
   --cost-grid-top: 0px;
   --cost-grid-right: 5px;
 
-  --cost-btn-width: 180px;
-  --cost-btn-height: 55px;
+  --cost-btn-width: 55%;
+  --cost-btn-height: 55%;
   --cost-btn-gap: 10px;
+  --cost-btn-top: 20px;
+  --cost-btn-right: -45%;
+
 
   /* ===== SHEETS BUTTON FRAMES ===== */
   --sheets-frame1-top: 165px;
@@ -300,39 +309,39 @@
   --sheets-frame3-left: 45px;
 
   /* ===== COST BUTTON FRAMES ===== */
-  --cost-frame1-top: 205px;
+  --cost-frame1-top: 105px;
   --cost-frame1-right: 40px;
 
   --cost-frame2-top: 277px;
   --cost-frame2-right: 40px;
 
    /* ===== SHEETS PNG FRAME ===== */
-  --sheets-frame-top: -30px;
-  --sheets-frame-left: -70px;
-  --sheets-frame-width: 380px;
-  --sheets-frame-height: 400px;
+  --sheets-frame-top: -28%;
+  --sheets-frame-left: -60px;
+  --sheets-frame-width: 100%;
+  --sheets-frame-height: 100%;
 
   /* ===== COST PNG FRAME ===== */
-  --cost-frame-top: -180px;
-  --cost-frame-width: 350px;
---cost-frame-height: 420px;
+  --cost-frame-top: -108%;
+  --cost-frame-width: 100%;
+--cost-frame-height: 100%;
 --cost-frame-right: -60px;
 
   /* ===== SHEETS BUTTON TITLES ===== */
-  --sheets-title1-top: 55px;
+  --sheets-title1-top: 10px;
   --sheets-title1-left: 62%;
 
-  --sheets-title2-top: 2px;
+  --sheets-title2-top: 12px;
   --sheets-title2-left: 62%;
 
-  --sheets-title3-top: 2px;
+  --sheets-title3-top: 12px;
   --sheets-title3-left: 62%;
 
   /* ===== COST BUTTON TITLES ===== */
-  --cost-title1-top: 15px;
+  --cost-title1-top: 13px;
   --cost-title1-left: 38%;
   
-  --cost-title2-top:15px;
+  --cost-title2-top:13px;
   --cost-title2-left: 38%;
 
 
